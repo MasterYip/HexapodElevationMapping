@@ -26,7 +26,7 @@ Panels:
   - Class: rviz/Time
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: PointCloud2
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -62,7 +62,7 @@ Visualization Manager:
       Enabled: true
       Grid Cell Decimation: 1
       Grid Line Thickness: 0.10000000149011612
-      Height Layer: elevation_inpainted
+      Height Layer: elevation
       Height Transformer: GridMapLayer
       History Length: 1
       Invert ColorMap: false
@@ -72,7 +72,7 @@ Visualization Manager:
       Min Intensity: 0
       Name: GridMap
       Show Grid Lines: true
-      Topic: /elevation_mapping/elevation_map_raw
+      Topic: /elevation_mapping/elevation_map
       Unreliable: false
       Use ColorMap: true
       Value: true
@@ -111,11 +111,25 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base:
+        base_link:
+          Value: true
+        camera_accel_frame:
+          Value: true
+        camera_accel_optical_frame:
+          Value: true
+        camera_gyro_frame:
+          Value: true
+        camera_gyro_optical_frame:
+          Value: true
+        camera_link:
+          Value: true
+        camera_odom_frame:
+          Value: true
+        camera_pose_frame:
           Value: true
         odom:
           Value: true
-        velodyne_lidar:
+        velodyneLidar:
           Value: true
         world:
           Value: true
@@ -126,10 +140,19 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
+        camera_odom_frame:
+          camera_pose_frame:
+            camera_link:
+              camera_accel_frame:
+                camera_accel_optical_frame:
+                  {}
+              camera_gyro_frame:
+                camera_gyro_optical_frame:
+                  {}
         world:
           odom:
-            base:
-              velodyne_lidar:
+            base_link:
+              velodyneLidar:
                 {}
       Update Interval: 0
       Value: true
@@ -161,7 +184,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.5705143213272095
+      Distance: 3.011281967163086
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -169,17 +192,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.19308842718601227
-        Y: -0.22166003286838531
-        Z: 0.16349370777606964
+        X: -0.17648717761039734
+        Y: -0.08345413953065872
+        Z: -0.15649649500846863
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.34979623556137085
+      Pitch: 0.6597961187362671
       Target Frame: <Fixed Frame>
-      Yaw: 1.4554060697555542
+      Yaw: 1.225408673286438
     Saved: ~
 Window Geometry:
   Displays:
