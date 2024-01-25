@@ -1,8 +1,8 @@
 <launch>
-    <arg name="sim" value="false"/>
+    <arg name="sim" value="true"/>
     <arg name="gui" value="true"/>
 
-    <arg name="odom_topic_name" value="torso_odom" if="$(eval sim == true)"/>
+    <arg name="odom_topic_name" value="/torso_odom" if="$(eval sim == true)"/>
     <arg name="odom_topic_name" value="/camera/odom/sample" unless="$(eval sim == true)"/>
 
     <arg name="lidar_frame_name" value="velodyneLidar" if="$(eval sim == true)"/>
@@ -18,14 +18,15 @@
     </group>
 
     <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
-        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml" />
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml" unless="$(eval sim == true)"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air_sim.yaml" if="$(eval sim == true)"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" />
     </node>
 
     <node pkg="hexapod_elevation_mapping" name="hexapod_tf_pub_node" type="hexapod_tf_pub_node" output="screen" ns="elspider_air">
         <param name="odom_topic_name"                                 type="string"  value="$(arg odom_topic_name)"/>
-        <param name="base_link2velodyne_lidar_x_trans_offset"        type="double"  value="0.30"/>
+        <!-- <param name="base_link2velodyne_lidar_x_trans_offset"        type="double"  value="0.30"/>
         <param name="base_link2velodyne_lidar_y_trans_offset"        type="double"  value="0.0"/>
         <param name="base_link2velodyne_lidar_z_trans_offset"        type="double"  value="0.2"/>
         <param name="base_link2velodyne_lidar_pitch_revolute_offset" type="double"  value="0.3"/>
@@ -37,11 +38,13 @@
         <param name="odom_link2base_link_z_trans_offset"        type="double"  value="0.4"/>
         <param name="odom_link2base_link_pitch_revolute_offset" type="double"  value="0.0"/>
         <param name="odom_link2base_link_roll_revolute_offset"  type="double"  value="-3.68"/>
-        <param name="odom_link2base_link_yaw_revolute_offset"   type="double"  value="3.14"/>
+        <param name="odom_link2base_link_yaw_revolute_offset"   type="double"  value="3.14"/> -->
     </node>
 
-    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link2laser" args="0.30 0.0 0.2 0.3 0.0 1.5 velodyneLidar base_link 40" /> -->
-    <!-- <node pkg="tf" type="static_transform_publisher" name="odom2base_link" args="-0.36 0.0 0.4 0.0 -3.68 3.14 base_link odom 40" /> -->
+    <node pkg="tf" type="static_transform_publisher" name="base_link2laser" args="0.30 0.0 0.2 0.3 0.0 1.5 base velodyneLidar 100" />
+    <!-- <node pkg="tf" type="static_transform_publisher" name="base_link2laser" args="0.30 0.0 0.2 0.3 0.0 1.5 base_link velodyneLidar 40" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="odom2base_link" args="-0.36 0.0 0.4 0.0 -3.68 3.14 odom base_link 40" /> -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="odom2base_link" args="0.2 0 0 0 0 0 odom base_link 40" /> -->
     <!-- <node pkg="tf" type="static_transform_publisher" name="world2odom" args="1 0.0 0.0 0.0 0.0 0.0 odom world 40" /> -->
 
     <!-- rviz-->

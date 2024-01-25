@@ -18,34 +18,34 @@ int main(int argc, char** argv) {
 
   std::string odomTopicName;
   ros::param::get("~odom_topic_name", odomTopicName);
-  
+
 
   // nh.param<std::string>("/elspider_air/pose_link_pub_node/odomTopicName_", odomTopicName, std::string("/torso_odom"));
   ros::Subscriber odom_sub = nh.subscribe(odomTopicName, 10, odomCallback);
 
-  double var[6];
-  nh.param<double>("base_link2velodyne_lidar_x_trans_offset", var[0], double(0.0));
-  nh.param<double>("base_link2velodyne_lidar_y_trans_offset", var[1], double(0.0));
-  nh.param<double>("base_link2velodyne_lidar_z_trans_offset", var[2], double(0.0));
-  nh.param<double>("base_link2velodyne_lidar_pitch_revolute_offset", var[3], double(0.0));
-  nh.param<double>("base_link2velodyne_lidar_roll_revolute_offset", var[4], double(0.0));
-  nh.param<double>("base_link2velodyne_lidar_yaw_revolute_offset", var[5], double(0.0));
-  transform.setOrigin(tf::Vector3(var[0], var[1], var[2]));
-  q.setRPY(var[3], var[4], var[5]);
-  transform.setRotation(q);
+  // double var[6];
+  // nh.param<double>("base_link2velodyne_lidar_x_trans_offset", var[0], double(0.0));
+  // nh.param<double>("base_link2velodyne_lidar_y_trans_offset", var[1], double(0.0));
+  // nh.param<double>("base_link2velodyne_lidar_z_trans_offset", var[2], double(0.0));
+  // nh.param<double>("base_link2velodyne_lidar_pitch_revolute_offset", var[3], double(0.0));
+  // nh.param<double>("base_link2velodyne_lidar_roll_revolute_offset", var[4], double(0.0));
+  // nh.param<double>("base_link2velodyne_lidar_yaw_revolute_offset", var[5], double(0.0));
+  // transform.setOrigin(tf::Vector3(var[0], var[1], var[2]));
+  // q.setRPY(var[3], var[4], var[5]);
+  // transform.setRotation(q);
 
-  double var2[6];
-  nh.param<double>("odom_link2base_link_x_trans_offset", var2[0], double(0.0));
-  nh.param<double>("odom_link2base_link_y_trans_offset", var2[1], double(0.0));
-  nh.param<double>("odom_link2base_link_z_trans_offset", var2[2], double(0.0));
-  nh.param<double>("odom_link2base_link_pitch_revolute_offset", var2[3], double(0.0));
-  nh.param<double>("odom_link2base_link_roll_revolute_offset", var2[4], double(0.0));
-  nh.param<double>("odom_link2base_link_yaw_revolute_offset", var2[5], double(0.0));
-  transform2.setOrigin(tf::Vector3(var2[0], var2[1], var2[2]));
-  q2.setRPY(var2[3], var2[4], var2[5]);
-  transform2.setRotation(q2);
+  // double var2[6];
+  // nh.param<double>("odom_link2base_link_x_trans_offset", var2[0], double(0.0));
+  // nh.param<double>("odom_link2base_link_y_trans_offset", var2[1], double(0.0));
+  // nh.param<double>("odom_link2base_link_z_trans_offset", var2[2], double(0.0));
+  // nh.param<double>("odom_link2base_link_pitch_revolute_offset", var2[3], double(0.0));
+  // nh.param<double>("odom_link2base_link_roll_revolute_offset", var2[4], double(0.0));
+  // nh.param<double>("odom_link2base_link_yaw_revolute_offset", var2[5], double(0.0));
+  // transform2.setOrigin(tf::Vector3(var2[0], var2[1], var2[2]));
+  // q2.setRPY(var2[3], var2[4], var2[5]);
+  // transform2.setRotation(q2);
 
-  ros::Timer timer = nh.createTimer(ros::Duration(0.05), timerCallback);
+  // ros::Timer timer = nh.createTimer(ros::Duration(0.05), timerCallback);
   // nh.param("fsm/thresh_replan1",       fp_->replan_thresh1_, -1.0);
   // nh.getParam("poseLinkPub");
   ros::spin();
