@@ -34,7 +34,7 @@
         <!-- Frame Name -->
         <arg name="world_frame_name" value="world"/>
         <arg name="odom_frame_name" value="odom"/>
-        <arg name="base_frame_name" value="base"/>
+        <arg name="base_frame_name" value="base_link"/>
         <arg name="lidar_frame_name" value="velodyneLidar"/>
         <!-- Installation TF -->
         <arg name="base2lidar_tf" value="0.30 0.0 0.35 1.57 0.0 0.25"/>

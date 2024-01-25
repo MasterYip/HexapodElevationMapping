@@ -60,7 +60,8 @@
     </node>
 
     <node pkg="tf" type="static_transform_publisher" name="base2lidar" args="$(arg base2lidar_tf) $(arg base_frame_name) $(arg lidar_frame_name) $(arg tf_pub_interval)"/>
-    <node pkg="tf" type="static_transform_publisher" name="odom2base" args="$(arg odom2base_tf) $(arg odom_frame_name) $(arg base_frame_name)  $(arg tf_pub_interval)" if="$(eval sim == false)"/>
+    <!-- <node pkg="tf" type="static_transform_publisher" name="odom2base" args="$(arg odom2base_tf) $(arg odom_frame_name) $(arg base_frame_name)  $(arg tf_pub_interval)" if="$(eval sim == false)"/> -->
+    <node pkg="tf" type="static_transform_publisher" name="odom2base" args="$(arg odom2base_tf) $(arg odom_frame_name) $(arg base_frame_name)  $(arg tf_pub_interval)"/>
 
 
     <!-- <node name="kinect_processing_Node" pkg="hitSpider" type="kinect_processing_Node" output="screen"/> -->
