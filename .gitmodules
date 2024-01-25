@@ -1,0 +1,24 @@
+[submodule "elevation_mapping"]
+	path = elevation_mapping
+	url = https://github.com/ANYbotics/elevation_mapping.git
+[submodule "kindr_ros"]
+	path = kindr_ros
+	url = https://github.com/ANYbotics/kindr_ros
+[submodule "velodyne"]
+	path = velodyne
+	url = https://github.com/ros-drivers/velodyne
+[submodule "realsense_ros_gazebo"]
+	path = realsense_ros_gazebo
+	url = https://github.com/nilseuropa/realsense_ros_gazebo
+[submodule "velodyne_simulator"]
+	path = velodyne_simulator
+	url = https://bitbucket.org/DataspeedInc/velodyne_simulator.git
+[submodule "grid_map"]
+	path = grid_map
+	url = https://github.com/ANYbotics/grid_map
+[submodule "kindr"]
+	path = kindr
+	url = https://github.com/ANYbotics/kindr
+[submodule "message_logger"]
+	path = message_logger
+	url = https://github.com/ANYbotics/message_logger
