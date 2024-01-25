@@ -1,0 +1,76 @@
+<launch>
+
+    <!-- ================================ Settings ================================ -->
+    <arg name="sim" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="tf_pub_interval" default="20"/>
+
+    <!-- Topic Name -->
+    <arg name="lidarpc_topic_name" default="/elspider_air/velodyne_points2"/>
+    <arg name="odom_topic_name" default="/torso_odom"/>
+    <!-- Frame Name -->
+    <arg name="world_frame_name" default="world"/>
+    <arg name="odom_frame_name" default="odom"/>
+    <arg name="base_frame_name" default="base"/>
+    <arg name="lidar_frame_name" default="velodyneLidar"/>
+    <!-- Installation TF -->
+    <arg name="lidar_installation_tf" default="0.30 0.0 0.35 1.57 0.3 0.0"/>
+    <arg name="odom_installation_tf" default="0.0 0.0 0.0 0.0 0.0 0.0"/>
+
+
+    <!-- ================================ Launch Program ================================ -->
+
+    <!-- Start Sensor Simulation -->
+    <group if="$(eval sim == false)">
+        <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
+        <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+            <arg name="calibration" value="$(find hexapod_elevation_mapping)/config/sensor/VLP16.yaml"/>
+            <arg name="frame_id" value="$(arg lidar_frame_name)"/>
+            <!-- <arg name="min_range" value="0.4"/> -->
+            <!-- <arg name="max_range" value="130.0"/> -->
+        </include>
+    </group>
+
+    <!-- Elevation Mapping -->
+    <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml"/>
+        <param name="map_frame_id" type="string" value="$(arg world_frame_name)"/>
+        <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="input_sources/ground_truth_cloud/topic" type="string" value="$(arg lidarpc_topic_name)"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" />
+    </node>
+
+    <!-- TF Pub -->
+    <node pkg="hexapod_elevation_mapping" name="hexapod_tf_pub_node" type="hexapod_tf_pub_node" output="screen" ns="elspider_air">
+        <param name="odom_topic_name" type="string" value="$(arg odom_topic_name)"/>
+        <!-- <param name="base_link2velodyne_lidar_x_trans_offset" type="double" value="0.30"/>
+        <param name="base_link2velodyne_lidar_y_trans_offset" type="double" value="0.0"/>
+        <param name="base_link2velodyne_lidar_z_trans_offset" type="double" value="0.2"/>
+        <param name="base_link2velodyne_lidar_pitch_revolute_offset" type="double" value="0.3"/>
+        <param name="base_link2velodyne_lidar_roll_revolute_offset" type="double" value="0.0"/>
+        <param name="base_link2velodyne_lidar_yaw_revolute_offset" type="double" value="1.57"/>
+
+        <param name="odom_link2base_link_x_trans_offset" type="double" value="-0.36"/>
+        <param name="odom_link2base_link_y_trans_offset" type="double" value="0.0"/>
+        <param name="odom_link2base_link_z_trans_offset" type="double" value="0.4"/>
+        <param name="odom_link2base_link_pitch_revolute_offset" type="double" value="0.0"/>
+        <param name="odom_link2base_link_roll_revolute_offset" type="double" value="-3.68"/>
+        <param name="odom_link2base_link_yaw_revolute_offset" type="double" value="3.14"/> -->
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="base2lidar" args="$(arg lidar_installation_tf) $(arg base_frame_name) $(arg lidar_frame_name) $(arg tf_pub_interval)" />
+    <node pkg="tf" type="static_transform_publisher" name="odom2base" args="$(arg odom_installation_tf) $(arg base_frame_name) $(arg odom_frame_name) $(arg tf_pub_interval)" />
+
+    <!-- rviz-->
+    <group if="$(eval gui == true)">
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping.rviz" required="true"/>
+    </group>
+    <!-- <node name="kinect_processing_Node" pkg="hitSpider" type="kinect_processing_Node" output="screen"/> -->
+
+    <!-- <node name="map_segmentation" pkg="hitSpider" type="map_segmentation" output="screen"/>
+    <node pkg="grid_map_visualization" type="grid_map_visualization" name="grid_map_visualization" output="screen">
+        <rosparam command="load" file="$(find hitSpider)/parameters/mapVisual.yaml" />
+    </node> -->
+
+</launch>
