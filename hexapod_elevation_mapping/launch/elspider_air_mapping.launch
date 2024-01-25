@@ -20,8 +20,8 @@
         <!-- Installation TF -->
         <!-- Usage: static_transform_publisher x y z yaw pitch roll -->
         <!-- Usage: static_transform_publisher x y z qx qy qz qw -->
-        <arg name="lidar_installation_tf" value="0.30 0.0 0.35 1.57 0.3 0.0"/>
-        <arg name="odom_installation_tf" value="0.36 0.0 0.25 1.57 -1 0.0"/>
+        <arg name="base2lidar_tf" value="0.30 0.0 0.35 1.57 0.3 0.0"/>
+        <arg name="odom2base_tf" value="-0.36 0.0 0.4 3.14 0.0 -3.68"/>
     </include>
 
     <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == true)">
@@ -37,7 +37,7 @@
         <arg name="base_frame_name" default="base"/>
         <arg name="lidar_frame_name" default="velodyneLidar"/>
         <!-- Installation TF -->
-        <arg name="lidar_installation_tf" default="0.30 0.0 0.35 1.57 0.3 0.0"/>
-        <arg name="odom_installation_tf" default="0.0 0.0 0.0 0.0 0.0 0.0"/>
+        <arg name="base2lidar_tf" default="0.30 0.0 0.35 1.57 0.3 0.0"/>
+        <arg name="odom2base_tf" default="0.0 0.0 0.0 0.0 0.0 0.0"/>
     </include>
 </launch>

@@ -14,8 +14,8 @@
     <arg name="base_frame_name" default="base"/>
     <arg name="lidar_frame_name" default="velodyneLidar"/>
     <!-- Installation TF -->
-    <arg name="lidar_installation_tf" default="0.30 0.0 0.35 1.57 0.3 0.0"/>
-    <arg name="odom_installation_tf" default="0.0 0.0 0.0 0.0 0.0 0.0"/>
+    <arg name="base2lidar_tf" default="0.30 0.0 0.35 1.57 0.3 0.0"/>
+    <arg name="odom2base_tf" default="0.0 0.0 0.0 0.0 0.0 0.0"/>
 
 
     <!-- ================================ Launch Program ================================ -->
@@ -59,8 +59,8 @@
         <param name="odom_link2base_link_roll_revolute_offset" type="double" value="-3.68"/>
         <param name="odom_link2base_link_yaw_revolute_offset" type="double" value="3.14"/> -->
     </node>
-    <node pkg="tf" type="static_transform_publisher" name="base2lidar" args="$(arg lidar_installation_tf) $(arg base_frame_name) $(arg lidar_frame_name) $(arg tf_pub_interval)" />
-    <node pkg="tf" type="static_transform_publisher" name="odom2base" args="$(arg odom_installation_tf) $(arg base_frame_name) $(arg odom_frame_name) $(arg tf_pub_interval)" />
+    <node pkg="tf" type="static_transform_publisher" name="base2lidar" args="$(arg base2lidar_tf) $(arg base_frame_name) $(arg lidar_frame_name) $(arg tf_pub_interval)" />
+    <node pkg="tf" type="static_transform_publisher" name="odom2base" args="$(arg odom2base_tf) $(arg odom_frame_name) $(arg base_frame_name)  $(arg tf_pub_interval)" />
 
     <!-- rviz-->
     <group if="$(eval gui == true)">
