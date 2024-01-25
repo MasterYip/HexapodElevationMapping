@@ -5,9 +5,9 @@
     <arg name="gui" value="true"/>
     <arg name="tf_pub_interval" value="20"/>
 
+    <!-- Hardware -->
     <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == false)">
         <arg name="sim" value="$(arg sim)"/>
-        <arg name="gui" value="$(arg gui)"/>
         <arg name="tf_pub_interval" value="$(arg tf_pub_interval)"/>
         <!-- Topic Name -->
         <arg name="lidarpc_topic_name" value="/velodyne_points"/>
@@ -24,20 +24,27 @@
         <arg name="odom2base_tf" value="-0.36 0.0 0.4 3.14 0.0 -3.68"/>
     </include>
 
+    <!-- Simulation -->
     <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == true)">
         <arg name="sim" value="$(arg sim)"/>
-        <arg name="gui" value="$(arg gui)"/>
         <arg name="tf_pub_interval" value="$(arg tf_pub_interval)"/>
         <!-- Topic Name -->
-        <arg name="lidarpc_topic_name" default="/elspider_air/velodyne_points2"/>
-        <arg name="odom_topic_name" default="/torso_odom"/>
+        <arg name="lidarpc_topic_name" value="/elspider_air/velodyne_points2"/>
+        <arg name="odom_topic_name" value="/torso_odom"/>
         <!-- Frame Name -->
-        <arg name="world_frame_name" default="world"/>
-        <arg name="odom_frame_name" default="odom"/>
-        <arg name="base_frame_name" default="base"/>
-        <arg name="lidar_frame_name" default="velodyneLidar"/>
+        <arg name="world_frame_name" value="world"/>
+        <arg name="odom_frame_name" value="odom"/>
+        <arg name="base_frame_name" value="base"/>
+        <arg name="lidar_frame_name" value="velodyneLidar"/>
         <!-- Installation TF -->
-        <arg name="base2lidar_tf" default="0.30 0.0 0.35 1.57 0.3 0.0"/>
-        <arg name="odom2base_tf" default="0.0 0.0 0.0 0.0 0.0 0.0"/>
+        <arg name="base2lidar_tf" value="0.30 0.0 0.35 1.57 0.0 0.25"/>
+        <arg name="odom2base_tf" value="0.0 0.0 0.0 0 0.0 0.0"/>
     </include>
+
+    <!-- rviz-->
+    <group if="$(eval gui == true)">
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping.rviz" required="true" unless="$(arg sim)"/>
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping_sim.rviz" required="true" if="$(arg sim)"/>
+    </group>
+
 </launch>

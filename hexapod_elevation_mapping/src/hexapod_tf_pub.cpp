@@ -85,9 +85,9 @@ void odomCallback(const nav_msgs::Odometry& msg) {
   br.sendTransform(transformStamped);
 }
 
-void timerCallback(const ros::TimerEvent& event) {
-  // 在定时器回调函数中处理逻辑
-  static tf::TransformBroadcaster static_broadcaster;
-  static_broadcaster.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "velodyneLidar"));
-  static_broadcaster.sendTransform(tf::StampedTransform(transform2, ros::Time::now(), "odom", "base_link"));
-}
+// void timerCallback(const ros::TimerEvent& event) {
+//   // 在定时器回调函数中处理逻辑
+//   static tf::TransformBroadcaster static_broadcaster;
+//   static_broadcaster.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "velodyneLidar"));
+//   static_broadcaster.sendTransform(tf::StampedTransform(transform2, ros::Time::now(), "odom", "base_link"));
+// }

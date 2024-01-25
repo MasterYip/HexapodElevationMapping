@@ -26,7 +26,7 @@ Panels:
   - Class: rviz/Time
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: PointCloud2
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -99,7 +99,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Flat Squares
-      Topic: /velodyne_points
+      Topic: /elspider_air/velodyne_points2
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -115,7 +115,7 @@ Visualization Manager:
           Value: true
         odom:
           Value: true
-        velodyne_lidar:
+        velodyneLidar:
           Value: true
         world:
           Value: true
@@ -129,7 +129,7 @@ Visualization Manager:
         world:
           odom:
             base:
-              velodyne_lidar:
+              velodyneLidar:
                 {}
       Update Interval: 0
       Value: true
@@ -169,17 +169,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.19308842718601227
-        Y: -0.22166003286838531
-        Z: 0.16349370777606964
+        X: 0.423539400100708
+        Y: -0.13087274134159088
+        Z: 0.24635674059391022
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.34979623556137085
+      Pitch: 0.4547961354255676
       Target Frame: <Fixed Frame>
-      Yaw: 1.4554060697555542
+      Yaw: 2.110405683517456
     Saved: ~
 Window Geometry:
   Displays:
