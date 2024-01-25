@@ -18,7 +18,8 @@ int main(int argc, char** argv) {
 
   std::string odomTopicName;
   ros::param::get("~odom_topic_name", odomTopicName);
-  ROS_INFO("odomTopicName is %s", odomTopicName.c_str());
+  
+
   // nh.param<std::string>("/elspider_air/pose_link_pub_node/odomTopicName_", odomTopicName, std::string("/torso_odom"));
   ros::Subscriber odom_sub = nh.subscribe(odomTopicName, 10, odomCallback);
 
@@ -87,6 +88,6 @@ void odomCallback(const nav_msgs::Odometry& msg) {
 void timerCallback(const ros::TimerEvent& event) {
   // 在定时器回调函数中处理逻辑
   static tf::TransformBroadcaster static_broadcaster;
-  static_broadcaster.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "/base_link", "/velodyneLidar"));
-  static_broadcaster.sendTransform(tf::StampedTransform(transform2, ros::Time::now(), "/odom", "/base_link"));
+  static_broadcaster.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "base_link", "velodyneLidar"));
+  static_broadcaster.sendTransform(tf::StampedTransform(transform2, ros::Time::now(), "odom", "base_link"));
 }
