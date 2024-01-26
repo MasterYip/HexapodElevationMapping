@@ -1,7 +1,7 @@
 <launch>
 
     <!-- ================================ Settings ================================ -->
-    <arg name="sim" value="false"/>
+    <arg name="sim" value="true"/>
     <arg name="gui" value="true"/>
     <arg name="tf_pub_interval" value="20"/>
 

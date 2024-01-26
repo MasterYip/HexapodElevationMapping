@@ -149,7 +149,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/hexapod_elevation_mapping_node.cpp)
-add_executable(hexapod_tf_pub_node src/hexapod_tf_pub.cpp)
+add_executable(world2odom_pub src/world2odom_pub.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -162,7 +162,7 @@ add_executable(hexapod_tf_pub_node src/hexapod_tf_pub.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(hexapod_tf_pub_node
+target_link_libraries(world2odom_pub
   ${catkin_LIBRARIES}
 )
 

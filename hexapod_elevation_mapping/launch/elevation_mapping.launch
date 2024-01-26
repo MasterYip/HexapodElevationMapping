@@ -42,7 +42,7 @@
     </node>
 
     <!-- TF Pub -->
-    <node pkg="hexapod_elevation_mapping" name="hexapod_tf_pub_node" type="hexapod_tf_pub_node" output="screen" ns="elspider_air">
+    <node pkg="hexapod_elevation_mapping" name="world2odom_pub" type="world2odom_pub" output="screen" ns="elspider_air">
         <param name="odom_topic_name" type="string" value="$(arg odom_topic_name)"/>
         <param name="odom_frame_name" type="string" value="$(arg odom_frame_name)"/>
         <param name="world_frame_name" type="string" value="$(arg world_frame_name)"/>

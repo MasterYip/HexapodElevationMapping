@@ -1,7 +1,6 @@
 input_sources:
   ground_truth_cloud: # A name to identify the input source
     type: pointcloud # Supported types: pointcloud
-    # topic: /elspider_air/velodyne_points2
     topic: /velodyne_points #Hardware
     queue_size: 1
     publish_on_update: true # Whether to publish the elevation map after a callback from this source.
