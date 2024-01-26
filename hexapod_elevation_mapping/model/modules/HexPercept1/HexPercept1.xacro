@@ -7,7 +7,7 @@
         <xacro:property name="gpu" value="$(arg gpu)" />
         <xacro:arg name="organize_cloud" default="false"/>
         <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
-        
+
         <!-- Interface Joint -->
         <joint name="sensorSupport_joint" type="fixed">
             <parent link="${parent_link}"/>

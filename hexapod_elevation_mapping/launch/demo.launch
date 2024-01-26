@@ -13,4 +13,3 @@
     <!-- Rviz -->
     <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping_sim.rviz" required="true"/>
 </launch>
-    

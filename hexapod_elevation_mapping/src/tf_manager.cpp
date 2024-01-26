@@ -1,11 +1,11 @@
-#include <geometry_msgs/TransformStamped.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/TransformStamped.h>
 
 #include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_ros/transform_listener.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 class TFManager
 {
@@ -23,8 +23,6 @@ class TFManager
     std::string baseFrameName_;
     std::string odomFrameName_;
 
-    geometry_msgs::TransformStamped world2base_tf_;
-
   public:
     void odomCallback(const nav_msgs::Odometry &msg)
     {
@@ -35,7 +33,7 @@ class TFManager
             return;
         }
         last_timestamp = msg.header.stamp;
-
+        geometry_msgs::TransformStamped world2base_tf_;
         geometry_msgs::Pose pose_base;
         try
         {
@@ -49,7 +47,7 @@ class TFManager
         {
             ROS_WARN("%s", ex.what());
         }
-        world2base_tf_.header.stamp = ros::Time::now();
+        world2base_tf_.header.stamp = msg.header.stamp;
         world2base_tf_.header.frame_id = worldFrameName_;
         world2base_tf_.child_frame_id = baseFrameName_;
         world2base_tf_.transform.translation.x = pose_base.position.x;

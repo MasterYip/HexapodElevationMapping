@@ -7,5 +7,5 @@
     <xacro:HexPercept1 parent_link="base_link">
         <origin rpy="0 0 0" xyz="0 0 0"/>
     </xacro:HexPercept1>
-        
+
 </robot>
