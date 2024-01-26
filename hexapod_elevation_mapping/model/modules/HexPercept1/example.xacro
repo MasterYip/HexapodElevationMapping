@@ -5,7 +5,7 @@
 
     <xacro:include filename="$(find hexapod_elevation_mapping)/model/modules/HexPercept1/HexPercept1.xacro"/>
     <xacro:HexPercept1 parent_link="base_link">
-        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <origin rpy="-1.5708 0 3.1415" xyz="0 0 0"/>
     </xacro:HexPercept1>
 
 </robot>

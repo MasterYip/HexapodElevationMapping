@@ -1,19 +1,31 @@
 <launch>
     <arg name="module_name" default="HexPercept1" />
+    <arg name="lidar_topic_name" value="/elspider_air/velodyne_points2"/>
+    <arg name="world_frame_name" default="world"/>
+    <arg name="base_frame_name" default="base_link"/>
 
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch" >
         <arg name="module_name" value="$(arg module_name)"/>
         <arg name="sim" default="true"/>
-        <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
-        <arg name="world_frame_name" default="world"/>
-        <arg name="base_frame_name" default="base_link"/>
+        <arg name="module_installation_tf" default="0.3 0 0.2 0 0 0"/>
+        <arg name="world_frame_name" default="$(arg world_frame_name)"/>
+        <arg name="base_frame_name" default="$(arg base_frame_name)"/>
     </include>
+
+    <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml"/>
+        <param name="map_frame_id" type="string" value="$(arg world_frame_name)"/>
+        <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="input_sources/ground_truth_cloud/topic" type="string" value="$(arg lidar_topic_name)"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" />
+    </node>
 
     <!-- Gazebo -->
     <include file="$(find hexapod_elevation_mapping)/launch/gazebo.launch" >
         <arg name="module_name" value="$(arg module_name)"/>
     </include>
-
 
     <!-- Rviz -->
     <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping_sim.rviz" required="true"/>
