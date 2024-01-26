@@ -11,7 +11,7 @@ input_sources:
 # robot_base_frame_id: "base_link"
 robot_pose_with_covariance_topic: "" # Leaving this empty skipps pose covariance updates.
 robot_pose_cache_size: 200
-track_point_frame_id: "base_link"
+# track_point_frame_id: "base_link"
 track_point_x: 0.0
 track_point_y: 0.0
 track_point_z: 0.0
