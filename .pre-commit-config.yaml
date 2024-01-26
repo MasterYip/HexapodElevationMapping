@@ -1,0 +1,31 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: check-xml
+    -   id: check-json
+    -   id: check-ast
+    -   id: check-added-large-files
+    -   id: check-case-conflict
+    -   id: check-merge-conflict
+    -   id: check-symlinks
+    -   id: check-docstring-first
+    -   id: check-executables-have-shebangs
+    -   id: debug-statements
+    -   id: end-of-file-fixer
+        exclude: ^third-party
+    -   id: mixed-line-ending
+    -   id: trailing-whitespace
+        exclude: ^third-party
+    # -   id: no-commit-to-branch # protect main and master branch
+
+-   repo: local
+    hooks:
+    -   id: clang-format
+        name: Check for code format
+        entry: clang-format
+        language: system
+        files: \.(c|cc|cxx|cpp|h|hpp|hxx)$
+        exclude: ^third-party
+        args: [ "-style=file","-i" ]

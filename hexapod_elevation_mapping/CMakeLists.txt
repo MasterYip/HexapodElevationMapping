@@ -114,7 +114,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
  INCLUDE_DIRS include
 #  LIBRARIES hexapod_elevation_mapping
- CATKIN_DEPENDS 
+ CATKIN_DEPENDS
   rospy
   roscpp
   elevation_mapping
