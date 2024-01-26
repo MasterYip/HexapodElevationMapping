@@ -1,0 +1,5 @@
+<launch>
+    <include file="$(find hexapod_elevation_mapping)/launch/gazebo.launch" />
+    <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" />
+</launch>
+    

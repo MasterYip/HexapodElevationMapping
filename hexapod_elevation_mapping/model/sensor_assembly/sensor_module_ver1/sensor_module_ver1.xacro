@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="SensorModuleVer1" params="parent_link *origin">
+        <!-- Const -->
+        <xacro:arg name="gpu" default="false"/>
+        <xacro:property name="gpu" value="$(arg gpu)" />
+        <xacro:arg name="organize_cloud" default="false"/>
+        <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+        
+        <!-- Interface Joint -->
+        <joint name="sensorSupport_joint" type="fixed">
+            <parent link="${parent_link}"/>
+            <child link="sensorSupport"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+
+        <!-- root link can not have interia, so add this link and joint -->
+        <link name="sensorSupport">
+            <inertial>
+                <origin xyz="0 0 0.0" rpy="0 0 0"/>
+                <!-- FIXME: need to update mass -->
+                <mass value="30.0"/>
+                <!-- FIXME: need to update ixx,iyy and izz -->
+                <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1}"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://hexapod_elevation_mapping/model/sensor_assembly/sensor_module_ver1/sensorSupport.STL"/>
+                </geometry>
+                <material name="">
+                    <color rgba="1 1 1 1" />
+                </material>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://hexapod_elevation_mapping/model/sensor_assembly/sensor_module_ver1/sensorSupport.STL"/>
+                </geometry>
+            </collision>
+        </link>
+
+
+
+        <xacro:include filename="$(find hexapod_elevation_mapping)/model/sensors/VLP-16/xacro/VLP-16.urdf.xacro"/>
+        <xacro:VLP-16 parent="sensorSupport" name="velodyneLidar" topic="/elspider_air/velodyne_points2" organize_cloud="${organize_cloud}" hz="10" samples="220" gpu="${gpu}">
+            <origin xyz="0 -0.13 0" rpy="1.5708 1.5708 -0.25" />
+        </xacro:VLP-16>
+
+        <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
+        <xacro:realsense_T265 sensor_name="T265_camera" parent_link="sensorSupport" rate="30.0">
+            <origin rpy="-1.5708 0 ${3.14159 - 0.395}" xyz="-0.12 -0.04 0"/>
+        </xacro:realsense_T265>
+    </xacro:macro>
+</robot>
