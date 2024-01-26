@@ -1,10 +1,10 @@
 <launch>
-  <arg name="module_name" default="sensor_module_ver1" />
+  <arg name="module_name" default="HexPercept1" />
 
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch" />
   <param name="robot_description"
-    command="$(find xacro)/xacro '$(find hexapod_elevation_mapping)/model/sensor_assembly/$(arg module_name)/example.xacro'"/>
+    command="$(find xacro)/xacro '$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/example.xacro'"/>
   <node
     name="spawn_model"
     pkg="gazebo_ros"

@@ -1,0 +1,20 @@
+<launch>
+    <arg name="module_name" default="HexPercept1" />
+
+    <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch" >
+        <arg name="module_name" value="$(arg module_name)"/>
+        <arg name="sim" default="true"/>
+        <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
+        <arg name="world_frame_name" default="world"/>
+        <arg name="base_frame_name" default="base_link"/>
+    </include>
+
+    <!-- Gazebo -->
+    <include file="$(find hexapod_elevation_mapping)/launch/gazebo.launch" >
+        <arg name="module_name" value="$(arg module_name)"/>
+    </include>
+
+
+    <!-- Rviz -->
+    <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping_sim.rviz" required="true"/>
+</launch>

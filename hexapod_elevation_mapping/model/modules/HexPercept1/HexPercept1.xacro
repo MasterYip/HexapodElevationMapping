@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="SensorModuleVer1" params="parent_link *origin">
+    <xacro:macro name="HexPercept1" params="parent_link *origin">
         <!-- Const -->
         <xacro:arg name="gpu" default="false"/>
         <xacro:property name="gpu" value="$(arg gpu)" />
@@ -28,7 +28,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://hexapod_elevation_mapping/model/sensor_assembly/sensor_module_ver1/sensorSupport.STL"/>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept1/sensorSupport.STL"/>
                 </geometry>
                 <material name="">
                     <color rgba="1 1 1 1" />
@@ -38,7 +38,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://hexapod_elevation_mapping/model/sensor_assembly/sensor_module_ver1/sensorSupport.STL"/>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept1/sensorSupport.STL"/>
                 </geometry>
             </collision>
         </link>

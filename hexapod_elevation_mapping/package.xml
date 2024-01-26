@@ -49,6 +49,7 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>tf2</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>elevation_mapping</build_depend>
@@ -56,6 +57,7 @@
   <build_depend>realsense_ros_gazebo</build_depend>
   <build_depend>velodyne_simulator</build_depend>
   <build_depend>velodyne_pointcloud</build_depend>
+  <build_export_depend>tf2</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>elevation_mapping</build_export_depend>
@@ -63,6 +65,7 @@
   <build_export_depend>realsense_ros_gazebo</build_export_depend>
   <build_export_depend>velodyne_simulator</build_export_depend>
   <build_export_depend>velodyne_pointcloud</build_export_depend>
+  <exec_depend>tf2</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>roscpp</exec_depend>
   <exec_depend>elevation_mapping</exec_depend>
