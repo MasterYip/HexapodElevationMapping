@@ -22,7 +22,7 @@
     <group if="$(eval sim == false)">
         <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
         <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
-            <arg name="calibration" value="$(find hexapod_elevation_mapping)/config/sensor/VLP16.yaml"/>
+            <arg name="calibration" value="$(find hexapod_elevation_mapping)/model/sensors/VLP-16/VLP16.yaml"/>
             <arg name="frame_id" value="$(arg lidar_frame_name)"/>
             <!-- <arg name="min_range" value="0.4"/> -->
             <!-- <arg name="max_range" value="130.0"/> -->
