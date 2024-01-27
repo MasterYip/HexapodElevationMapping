@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <xacro:macro name="HexPercept2" params="parent_link *origin">
+    <xacro:macro name="HexPercept2" params="parent_link *origin lidar_frame_name:=BPearl_Lidar camera_frame_name:=camera">
         <!-- Const -->
         <xacro:arg name="gpu" default="false"/>
         <xacro:property name="gpu" value="$(arg gpu)" />
@@ -46,12 +46,12 @@
         </link>
 
         <xacro:include filename="$(find hexapod_elevation_mapping)/model/sensors/RS-BPearl/xacro/RS-BPearl.xacro"/>
-        <xacro:RS-BPearl parent="sensorSupport" name="RS-BPearlLidar" topic="/bpearl_points2" organize_cloud="${organize_cloud}" hz="15" samples="1000" gpu="${gpu}">
-            <origin xyz="0 0 0" rpy="0 0 0" />
+        <xacro:RS-BPearl parent="sensorSupport" name="${lidar_frame_name}" topic="/bpearl_points" organize_cloud="${organize_cloud}" hz="15" samples="1000" gpu="${gpu}">
+            <origin xyz="0 0 0" rpy="0 1.5708 0" />
         </xacro:RS-BPearl>
 
         <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
-        <xacro:realsense_T265 sensor_name="T265_camera" parent_link="sensorSupport" rate="30.0">
+        <xacro:realsense_T265 sensor_name="${camera_frame_name}" parent_link="sensorSupport" rate="30.0">
             <origin rpy="0 0 0" xyz="0.0026 0 0.06854"/>
         </xacro:realsense_T265>
     </xacro:macro>

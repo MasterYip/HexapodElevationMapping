@@ -9,17 +9,16 @@
     <!-- ================================ Config ================================ -->
     <!-- Frame Name -->
     <arg name="module_frame_name" value="$(arg module_name)"/>
-    <arg name="lidar_frame_name" value="velodyneLidar"/>
+    <arg name="lidar_frame_name" value="BPearl_Lidar"/>
     <arg name="odom_frame_name" value="$(arg module_name)_odom"/>
     <!-- Installation TF -->
     <!-- Usage: static_transform_publisher x y z yaw pitch roll -->
     <!-- Usage: static_transform_publisher x y z qx qy qz qw -->
-    <arg name="lidar_installation_tf" value="0.10 0.0 0.2 1.57 0.0 0.25"/>
-    <arg name="odom_installation_tf" value="0.15 0.0 0.05 0 0.395 0" if="$(eval sim == true)"/>
-    <arg name="odom_installation_tf" value="0.15 0.0 0.05 1.57 0 -1.1757" if="$(eval sim == false)"/>
+    <arg name="lidar_installation_tf" value="0 0 0 0 1.5708 0"/>
+    <arg name="odom_installation_tf" value="0.0026 0 0.06854 0 0 0"/>
     <!-- Topic Name -->
-    <arg name="lidar_topic_name" value="/velodyne_points"/>
-    <arg name="odom_topic_name" value="/T265_camera/odom/sample"/>
+    <arg name="lidar_topic_name" value="/bpearl_points"/>
+    <arg name="odom_topic_name" value="/camera/odom/sample"/>
 
     <!-- Load to rosparam -->
     <param name="$(arg module_name)/module_frame_name" value="$(arg module_frame_name)"/>
@@ -34,12 +33,7 @@
 
     <group if="$(eval sim == false)">
         <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
-        <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
-            <arg name="calibration" value="$(find hexapod_elevation_mapping)/config/sensor/VLP16.yaml"/>
-            <arg name="frame_id" value="$(arg lidar_frame_name)"/>
-            <!-- <arg name="min_range" value="0.4"/> -->
-            <!-- <arg name="max_range" value="130.0"/> -->
-        </include>
+        <include file="$(find hexapod_elevation_mapping)/model/sensors/RS-BPearl/start.launch"/>
     </group>
 
     <node name="tf_manager_world2base" pkg="hexapod_elevation_mapping" type="tf_manager" output="screen">

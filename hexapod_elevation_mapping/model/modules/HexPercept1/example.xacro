@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
 
 <robot name="HexPercept1_example" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="lidar_frame_name" value="velodyneLidar"/>
+    <xacro:property name="camera_frame_name" value="camera"/>
     <link name="base_link"/>
 
     <xacro:include filename="$(find hexapod_elevation_mapping)/model/modules/HexPercept1/HexPercept1.xacro"/>
-    <xacro:HexPercept1 parent_link="base_link">
+    <xacro:HexPercept1 parent_link="base_link" lidar_frame_name="${lidar_frame_name}" camera_frame_name="${camera_frame_name}">
         <origin rpy="-1.5708 0 3.1415" xyz="0 0 0"/>
     </xacro:HexPercept1>
 

@@ -3,12 +3,10 @@
     <!-- ================================ Settings ================================ -->
     <arg name="sim" value="true"/>
     <arg name="gui" value="true"/>
-    <arg name="tf_pub_interval" value="20"/>
 
     <!-- Hardware -->
     <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == false)">
         <arg name="sim" value="$(arg sim)"/>
-        <arg name="tf_pub_interval" value="$(arg tf_pub_interval)"/>
         <!-- Topic Name -->
         <arg name="lidarpc_topic_name" value="/velodyne_points"/>
         <arg name="odom_topic_name" value="/camera/odom/sample"/>
@@ -27,10 +25,9 @@
     <!-- Simulation -->
     <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == true)">
         <arg name="sim" value="$(arg sim)"/>
-        <arg name="tf_pub_interval" value="$(arg tf_pub_interval)"/>
         <!-- Topic Name -->
         <arg name="lidarpc_topic_name" value="/velodyne_points"/>
-        <arg name="odom_topic_name" value="/torso_odom"/>
+        <arg name="odom_topic_name" value="/camera/odom/sample"/>
         <!-- Frame Name -->
         <arg name="world_frame_name" value="world"/>
         <arg name="odom_frame_name" value="odom"/>

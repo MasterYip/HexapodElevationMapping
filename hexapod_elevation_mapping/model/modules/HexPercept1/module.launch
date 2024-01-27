@@ -19,7 +19,7 @@
     <arg name="odom_installation_tf" value="0.15 0.0 0.05 1.57 0 -1.1757" if="$(eval sim == false)"/>
     <!-- Topic Name -->
     <arg name="lidar_topic_name" value="/velodyne_points"/>
-    <arg name="odom_topic_name" value="/T265_camera/odom/sample"/>
+    <arg name="odom_topic_name" value="/camera/odom/sample"/>
 
     <!-- Load to rosparam -->
     <param name="$(arg module_name)/module_frame_name" value="$(arg module_frame_name)"/>

@@ -12,7 +12,7 @@
     <link name="${name}_base_link">
       <inertial>
         <mass value="0.83"/>
-        <origin xyz="0 0 0.03585"/>
+        <origin rpy="0 0 0" xyz="0 0 0.055"/>
         <inertia ixx="${(0.83 * (3.0*0.0516*0.0516 + 0.0717*0.0717)) / 12.0}" ixy="0" ixz="0"
           iyy="${(0.83 * (3.0*0.0516*0.0516 + 0.0717*0.0717)) / 12.0}" iyz="0"
           izz="${0.5 * 0.83 * (0.0516*0.0516)}"/>
@@ -21,17 +21,18 @@
         <geometry>
           <mesh filename="package://hexapod_elevation_mapping/model/sensors/RS-BPearl/meshes/BPearl.STL" />
         </geometry>
+        <origin rpy="0 -1.5708 0" xyz="0 0 0"/>
       </visual>
       <collision>
-        <origin rpy="0 0 0" xyz="0 0 0.03585"/>
+        <origin rpy="0 0 0" xyz="0 0 0.055"/>
         <geometry>
-          <cylinder radius="0.0516" length="0.0717"/>
+          <cylinder radius="0.0500" length="0.11"/>
         </geometry>
       </collision>
     </link>
 
     <joint name="${name}_base_scan_joint" type="fixed" >
-      <origin xyz="0 0 0.0377" rpy="0 0 0" />
+      <origin xyz="0 0 0.07" rpy="0 0 0" />
       <parent link="${name}_base_link" />
       <child link="${name}"/>
     </joint>
