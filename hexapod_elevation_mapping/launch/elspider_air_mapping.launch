@@ -1,47 +1,31 @@
 <launch>
+    <arg name="module_name" default="HexPercept2" />
+    <arg name="world_frame_name" default="world"/>
+    <arg name="base_frame_name" default="base_link"/>
 
-    <!-- ================================ Settings ================================ -->
-    <arg name="sim" value="true"/>
-    <arg name="gui" value="true"/>
-
-    <!-- Hardware -->
-    <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == false)">
-        <arg name="sim" value="$(arg sim)"/>
-        <!-- Topic Name -->
-        <arg name="lidarpc_topic_name" value="/velodyne_points"/>
-        <arg name="odom_topic_name" value="/camera/odom/sample"/>
-        <!-- Frame Name -->
-        <arg name="world_frame_name" value="world"/>
-        <arg name="odom_frame_name" value="odom"/>
-        <arg name="base_frame_name" value="base_link"/>
-        <arg name="lidar_frame_name" value="velodyneLidar"/>
-        <!-- Installation TF -->
-        <!-- Usage: static_transform_publisher x y z yaw pitch roll -->
-        <!-- Usage: static_transform_publisher x y z qx qy qz qw -->
-        <arg name="base2lidar_tf" value="0.30 0.0 0.35 1.57 0.0 0.25"/>
-        <arg name="odom2base_tf" value="-0.36 0.0 0.4 3.14 2.618 0.0 "/>
+    <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
+    <arg name="module_installation_tf" default="0.27 0 0.2 0 0 0" if="$(eval module_name == 'HexPercept1')"/>
+    <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept2')"/>
+    <arg name="module_installation_tf" default="0.32 0 0 0 0 0" if="$(eval module_name == 'HexPercept2')"/>
+    
+    <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
+        <arg name="module_name" value="$(arg module_name)"/>
+        <arg name="sim" default="true"/>
+        <arg name="module_installation_tf" default="$(arg module_installation_tf)"/>
+        <arg name="world_frame_name" default="$(arg world_frame_name)"/>
+        <arg name="base_frame_name" default="$(arg base_frame_name)"/>
     </include>
 
-    <!-- Simulation -->
-    <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch" if="$(eval sim == true)">
-        <arg name="sim" value="$(arg sim)"/>
-        <!-- Topic Name -->
-        <arg name="lidarpc_topic_name" value="/velodyne_points"/>
-        <arg name="odom_topic_name" value="/camera/odom/sample"/>
-        <!-- Frame Name -->
-        <arg name="world_frame_name" value="world"/>
-        <arg name="odom_frame_name" value="odom"/>
-        <arg name="base_frame_name" value="base_link"/>
-        <arg name="lidar_frame_name" value="velodyneLidar"/>
-        <!-- Installation TF -->
-        <arg name="base2lidar_tf" value="0.30 0.0 0.35 1.57 0.0 0.25"/>
-        <arg name="odom2base_tf" value="0.0 0.0 0.0 0 0.0 0.0"/>
-    </include>
+    <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml"/>
+        <param name="map_frame_id" type="string" value="$(arg world_frame_name)"/>
+        <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="input_sources/ground_truth_cloud/topic" type="string" value="$(arg lidar_topic_name)"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" />
+    </node>
 
-    <!-- rviz-->
-    <group if="$(eval gui == true)">
-        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping.rviz" required="true" unless="$(arg sim)"/>
-        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping_sim.rviz" required="true" if="$(arg sim)"/>
-    </group>
-
+    <!-- Rviz -->
+    <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/$(arg module_name).rviz" required="true"/>
 </launch>
