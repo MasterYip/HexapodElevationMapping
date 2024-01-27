@@ -4,7 +4,7 @@
     <arg name="sim" default="true"/>
 
     <!-- Topic Name -->
-    <arg name="lidarpc_topic_name" default="/elspider_air/velodyne_points2"/>
+    <arg name="lidarpc_topic_name" default="/velodyne_points"/>
     <arg name="odom_topic_name" default="/torso_odom"/>
     <!-- Frame Name -->
     <arg name="world_frame_name" default="world"/>

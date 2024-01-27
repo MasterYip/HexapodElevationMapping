@@ -1,10 +1,10 @@
 <launch>
     <arg name="module_name" default="HexPercept1" />
-    <arg name="lidar_topic_name" value="/elspider_air/velodyne_points2"/>
+    <arg name="lidar_topic_name" value="/velodyne_points"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
 
-    <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch" >
+    <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
         <arg name="module_name" value="$(arg module_name)"/>
         <arg name="sim" default="true"/>
         <arg name="module_installation_tf" default="0.3 0 0.2 0 0 0"/>
@@ -23,7 +23,7 @@
     </node>
 
     <!-- Gazebo -->
-    <include file="$(find hexapod_elevation_mapping)/launch/gazebo.launch" >
+    <include file="$(find hexapod_elevation_mapping)/launch/gazebo.launch">
         <arg name="module_name" value="$(arg module_name)"/>
     </include>
 

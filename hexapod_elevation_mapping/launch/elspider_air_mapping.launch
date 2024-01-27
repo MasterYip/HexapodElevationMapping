@@ -29,7 +29,7 @@
         <arg name="sim" value="$(arg sim)"/>
         <arg name="tf_pub_interval" value="$(arg tf_pub_interval)"/>
         <!-- Topic Name -->
-        <arg name="lidarpc_topic_name" value="/elspider_air/velodyne_points2"/>
+        <arg name="lidarpc_topic_name" value="/velodyne_points"/>
         <arg name="odom_topic_name" value="/torso_odom"/>
         <!-- Frame Name -->
         <arg name="world_frame_name" value="world"/>

@@ -46,7 +46,7 @@
 
 
         <xacro:include filename="$(find hexapod_elevation_mapping)/model/sensors/VLP-16/xacro/VLP-16.urdf.xacro"/>
-        <xacro:VLP-16 parent="sensorSupport" name="velodyneLidar" topic="/elspider_air/velodyne_points2" organize_cloud="${organize_cloud}" hz="10" samples="220" gpu="${gpu}">
+        <xacro:VLP-16 parent="sensorSupport" name="velodyneLidar" topic="/velodyne_points" organize_cloud="${organize_cloud}" hz="10" samples="220" gpu="${gpu}">
             <origin xyz="0 -0.13 0" rpy="1.5708 1.5708 -0.25" />
         </xacro:VLP-16>
 
