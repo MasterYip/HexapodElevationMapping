@@ -1,15 +1,11 @@
 <launch>
-    <arg name="module_name" default="sensor_module_ver1" />
+    <arg name="module_name" default="HexPercept2" />
 
     <!-- Gazebo -->
     <include file="$(find hexapod_elevation_mapping)/launch/gazebo.launch" >
         <arg name="module_name" value="$(arg module_name)"/>
     </include>
-    <!-- Elevation Mapping -->
-    <include file="$(find hexapod_elevation_mapping)/launch/elevation_mapping.launch">
-        <!-- Config -->
-        <include file="$(find hexapod_elevation_mapping)/model/sensor_assembly/$(arg module_name)/config.launch" />
-    </include>
+
     <!-- Rviz -->
     <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/elspider_air_mapping_sim.rviz" required="true"/>
 </launch>

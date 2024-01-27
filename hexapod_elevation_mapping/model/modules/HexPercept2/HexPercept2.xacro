@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="HexPercept2" params="parent_link *origin">
+        <!-- Const -->
+        <xacro:arg name="gpu" default="false"/>
+        <xacro:property name="gpu" value="$(arg gpu)" />
+        <xacro:arg name="organize_cloud" default="false"/>
+        <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+
+        <!-- Interface Joint -->
+        <joint name="sensorSupport_joint" type="fixed">
+            <parent link="${parent_link}"/>
+            <child link="sensorSupport"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+
+        <!-- root link can not have interia, so add this link and joint -->
+        <link name="sensorSupport">
+            <inertial>
+                <origin xyz="0 0 0.0" rpy="0 0 0"/>
+                <!-- FIXME: need to update mass -->
+                <mass value="30.0"/>
+                <!-- FIXME: need to update ixx,iyy and izz -->
+                <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1}"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept2/Support.STL"/>
+                    <!-- Scale down 1000 times -->
+                    <scale xyz="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="">
+                    <color rgba="1 1 1 1" />
+                </material>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept2/Support.STL"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <xacro:include filename="$(find hexapod_elevation_mapping)/model/sensors/RS-BPearl/xacro/RS-BPearl.xacro"/>
+        <xacro:RS-BPearl parent="sensorSupport" name="RS-BPearlLidar" topic="/bpearl_points2" organize_cloud="${organize_cloud}" hz="15" samples="1000" gpu="${gpu}">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </xacro:RS-BPearl>
+
+        <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
+        <xacro:realsense_T265 sensor_name="T265_camera" parent_link="sensorSupport" rate="30.0">
+            <origin rpy="0 0 0" xyz="0.0026 0 0.06854"/>
+        </xacro:realsense_T265>
+    </xacro:macro>
+</robot>

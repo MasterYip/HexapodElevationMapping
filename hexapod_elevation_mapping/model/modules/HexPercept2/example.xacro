@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<robot name="HexPercept2_example" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <link name="base_link"/>
+
+    <xacro:include filename="$(find hexapod_elevation_mapping)/model/modules/HexPercept2/HexPercept2.xacro"/>
+    <xacro:HexPercept2 parent_link="base_link">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </xacro:HexPercept2>
+
+</robot>
