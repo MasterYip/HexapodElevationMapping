@@ -19,8 +19,11 @@ find_package(catkin REQUIRED COMPONENTS
   grid_map_ros
   elevation_mapping
   realsense_ros_gazebo
+  # Velodyne
   velodyne_pointcloud
   velodyne_gazebo_plugins
+  # RoboSense
+  rslidar_sdk
 )
 
 ## System dependencies are found with CMake's conventions

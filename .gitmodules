@@ -22,3 +22,9 @@
 [submodule "message_logger"]
 	path = message_logger
 	url = https://github.com/ANYbotics/message_logger
+[submodule "rslidar_sdk"]
+	path = rslidar_sdk
+	url = https://github.com/RoboSense-LiDAR/rslidar_sdk.git
+[submodule "third_party/rs_driver"]
+	path = third_party/rs_driver
+	url = https://github.com/RoboSense-LiDAR/rs_driver.git
