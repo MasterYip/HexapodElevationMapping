@@ -30,5 +30,5 @@
     </include>
 
     <!-- Rviz -->
-    <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/config/rviz/$(arg module_name).rviz" required="true"/>
+    <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/$(arg module_name).rviz" required="true"/>
 </launch>
