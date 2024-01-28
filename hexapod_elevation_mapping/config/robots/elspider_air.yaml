@@ -7,6 +7,7 @@ input_sources:
     publish_on_update: true # Whether to publish the elevation map after a callback from this source.
     sensor_processor:
       type: perfect
+      ignore_points_above: 1
 # map_frame_id: "world"
 # robot_base_frame_id: "base_link"
 robot_pose_with_covariance_topic: "" # Leaving this empty skipps pose covariance updates.
