@@ -29,8 +29,6 @@
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
                     <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept2/Support.STL"/>
-                    <!-- Scale down 1000 times -->
-                    <scale xyz="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="">
                     <color rgba="1 1 1 1" />
