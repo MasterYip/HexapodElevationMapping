@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot name="HexPercept3_example" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="lidar_frame_name" value="BPearl_Lidar"/>
+    <xacro:property name="camera_frame_name" value="camera"/>
+    <link name="base_link"/>
+
+    <xacro:include filename="$(find hexapod_elevation_mapping)/model/modules/HexPercept3/HexPercept3.xacro"/>
+    <xacro:HexPercept3 parent_link="base_link" lidar_frame_name="${lidar_frame_name}" camera_frame_name="${camera_frame_name}">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </xacro:HexPercept3>
+
+</robot>

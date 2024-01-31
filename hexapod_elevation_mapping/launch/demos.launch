@@ -1,12 +1,13 @@
 <launch>
-    <!-- HexPercept1 / HexPercept2 -->
-    <arg name="module_name" default="HexPercept1" />
+    <!-- HexPercept1 / HexPercept2 / HexPercept3 -->
+    <arg name="module_name" default="HexPercept3" />
 
     <!-- Config -->
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept2')"/>
+    <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3')"/>
     
     <!-- Sensor Module -->
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">

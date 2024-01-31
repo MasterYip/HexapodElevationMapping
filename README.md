@@ -50,7 +50,7 @@ Catkin make.
 
 ```bash
 cd ../../
-catkin_make -DCMAKE_BUILD_TYPE=Release
+catkin build hexapod_elevation_mapping -DCMAKE_BUILD_TYPE=Release
 source devel/setup.bash
 ```
 
