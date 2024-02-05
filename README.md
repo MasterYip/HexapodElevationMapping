@@ -26,6 +26,15 @@ HexPercept1 use **T265 as Inertial Measurement Unit (IMU)** and **Velodyne VLP-1
 
 HexPercept2 use **T265 as Inertial Measurement Unit (IMU)** and **RoboSense BPearl as range sensor**.
 
+### HexPercept3
+
+<div style="display:flex; justify-content:center;">
+    <img src="doc/HexPercept3_model.png" alt="Image 1" style="height:300px; margin-right:10px;">
+    <img src="doc/HexPercept3_elevation_mapping.png" alt="Image 2" style="height:300px;">
+</div>
+
+HexPercept3 use **T265 as Inertial Measurement Unit (IMU)** and **RoboSense BPearl & D435i(not equipped) as range sensor**.
+
 ---
 
 ## Get Started
@@ -43,7 +52,7 @@ git clone --recursive https://github.com/MasterYip/HexapodElevationMapping
 Install dependencies.
 
 ```bash
-sudo apt install ros-$ROS_DISTRO-realsense2-camera ros-noetic-realsense2-description
+sudo apt install ros-$ROS_DISTRO-realsense2-camera ros-noetic-realsense2-description libpcap-dev
 ```
 
 Catkin make.
@@ -59,12 +68,12 @@ source devel/setup.bash
 Choose a sensor module and launch the demo.
 
 ```xml
-<!-- HexPercept1 / HexPercept2 -->
+<!-- HexPercept1 / HexPercept2 / HexPercept3 -->
 <arg name="module_name" default="HexPercept1" />
 ```
 
 ```bash
-roslauch hexapod_elevation_mapping demos.launch
+roslaunch hexapod_elevation_mapping demos.launch
 ```
 
 ---
