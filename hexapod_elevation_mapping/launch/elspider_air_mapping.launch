@@ -22,10 +22,10 @@
     <!-- Launch -->
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
         <arg name="module_name" value="$(arg module_name)"/>
-        <arg name="sim" default="$(arg sim)"/>
-        <arg name="module_installation_tf" default="$(arg module_installation_tf)"/>
-        <arg name="world_frame_name" default="$(arg world_frame_name)"/>
-        <arg name="base_frame_name" default="$(arg base_frame_name)"/>
+        <arg name="sim" value="$(arg sim)"/>
+        <arg name="module_installation_tf" value="$(arg module_installation_tf)"/>
+        <arg name="world_frame_name" value="$(arg world_frame_name)"/>
+        <arg name="base_frame_name" value="$(arg base_frame_name)"/>
     </include>
 
     <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
