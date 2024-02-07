@@ -5,6 +5,7 @@
     <arg name="sim" default="true"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
+    <arg name="rviz_gui" default="true"/>
     <!-- Elevation Mapping Topic remap -->
     <arg name="elevation_map_topic_name" default="elevation_mapping/elevation_map" />
     <arg name="elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw" />
@@ -41,5 +42,5 @@
     </node>
 
     <!-- Rviz -->
-    <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/$(arg module_name).rviz" required="true"/>
+    <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/$(arg module_name).rviz" required="true" if="$(arg rviz_gui)"/>
 </launch>
