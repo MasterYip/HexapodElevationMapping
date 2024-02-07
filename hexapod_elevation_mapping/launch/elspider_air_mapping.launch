@@ -35,7 +35,9 @@
         <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
         <param name="input_sources/ground_truth_cloud/topic" type="string" value="$(arg lidar_topic_name)"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
-        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" />
+        <!-- FIXME -->
+        <!-- <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" /> -->
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline_for_simple_planner.yaml" />
         <remap from="elevation_mapping/elevation_map" to="$(arg elevation_map_topic_name)"/>
         <remap from="elevation_mapping/elevation_map_raw" to="$(arg elevation_map_raw_topic_name)"/>
         <remap from="elevation_mapping/visibility_cleanup_map" to="$(arg visibility_cleanup_map_topic_name)"/>
