@@ -8,7 +8,11 @@
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept2')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3')"/>
-    
+    <!-- Elevation Mapping Topic remap -->
+    <arg name="elevation_map_topic_name" default="elevation_mapping/elevation_map" />
+    <arg name="elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw" />
+    <arg name="visibility_cleanup_map_topic_name" default="elevation_mapping/visibility_cleanup_map" />
+
     <!-- Sensor Module -->
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
         <arg name="module_name" value="$(arg module_name)"/>
@@ -27,6 +31,9 @@
         <param name="input_sources/ground_truth_cloud/topic" type="string" value="$(arg lidar_topic_name)"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" />
+        <remap from="elevation_mapping/elevation_map" to="$(arg elevation_map_topic_name)"/>
+        <remap from="elevation_mapping/elevation_map_raw" to="$(arg elevation_map_raw_topic_name)"/>
+        <remap from="elevation_mapping/visibility_cleanup_map" to="$(arg visibility_cleanup_map_topic_name)"/>
     </node>
 
     <!-- Gazebo -->
