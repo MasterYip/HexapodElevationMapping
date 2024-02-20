@@ -119,7 +119,16 @@ The **output** is the point cloud topic that the elevation mapping node will sub
 
 ---
 
-## [elevation_mapping readme](elevation_mapping/README.md) correction
+### Notations
+
+#### RS-BPearl Lidar IP config
+
+When using default RS-Bpearl firmware:
+
+- Host IP: 192.168.1.102
+- Net Mask: 255.255.255.0
+
+#### [elevation_mapping readme](elevation_mapping/README.md) correction
 
 - **`robot_base_frame_id`** (string, default: "/robot")
 
