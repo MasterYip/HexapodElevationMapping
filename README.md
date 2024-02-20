@@ -119,6 +119,24 @@ The **output** is the point cloud topic that the elevation mapping node will sub
 
 ---
 
+## [elevation_mapping readme](elevation_mapping/README.md) correction
+
+- **`robot_base_frame_id`** (string, default: "/robot")
+
+  **(not base_frame_id)**
+
+  The id of the robot base tf frame.
+
+- **`sensor_processor/cutoff_min_depth`**, **`sensor_processor/cutoff_max_depth`** (double, default: min, max of numeric_limits<double>)
+
+  **(not sensor_cutoff_min_depth, sensor_cutoff_max_depth)**
+
+  The minimum and maximum values for the length of the distance sensor measurements. Measurements outside this interval are ignored.
+
+  > **Temporarily not provided for type:laser**
+
+---
+
 ## Dependencies
 
 Apt install
