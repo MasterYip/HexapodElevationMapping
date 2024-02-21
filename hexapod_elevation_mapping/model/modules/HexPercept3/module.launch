@@ -14,8 +14,8 @@
     <!-- Installation TF -->
     <!-- Usage: static_transform_publisher x y z yaw pitch roll -->
     <!-- Usage: static_transform_publisher x y z qx qy qz qw -->
-    <arg name="lidar_installation_tf" value="-0.045 0 0.15 0 1.5708 0" if="$(eval sim == true)"/>
-    <arg name="lidar_installation_tf" value="-0.045 0 0.15 -0.5792 0.4056 -0.5792 0.4056" unless="$(eval sim == true)"/>
+    <arg name="lidar_installation_tf" value="-0.045 0 0.15 0 1.5708 0" if="$(eval sim == 1)"/>
+    <arg name="lidar_installation_tf" value="-0.045 0 0.15 -0.5792 0.4056 -0.5792 0.4056" unless="$(eval sim == 1)"/>
     <arg name="odom_installation_tf" value="0.0125 0 0.014 0 0 0"/>
     <!-- Topic Name -->
     <arg name="lidar_topic_name" value="/bpearl_points"/>
