@@ -4,6 +4,9 @@
 
 **Sensor Module & Elevation mapping bundle** for Robot both in simulation and real world.
 
+TODO:
+- Add namespace option for sensor module
+
 ---
 
 ## Sensor Modules
