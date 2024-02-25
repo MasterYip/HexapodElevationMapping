@@ -168,6 +168,18 @@ Git submodules
 - [realsense_ros_gazebo](https://github.com/nilseuropa/realsense_ros_gazebo)
 - [velodyne_simulator](https://bitbucket.org/DataspeedInc/velodyne_simulator.git)
 
+## Cite this repo
+
+```bibtex
+@online{hexapod_elevation_mapping_repo,
+  author = {Raymon Yip},
+  title = {HexapodElevationMapping},
+  year = 2024,
+  url = {https://github.com/MasterYip/HexapodElevationMapping},
+  urldate = {2024-02-25}
+}
+```
+
 ## Acknowledgement
 
 Many thanks to [Tipriest](https://github.com/Tipriest) for him providing the original solution.
