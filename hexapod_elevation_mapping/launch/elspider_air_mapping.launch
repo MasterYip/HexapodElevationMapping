@@ -2,6 +2,7 @@
     <!-- Settings -->
     <!-- HexPercept1 / HexPercept2 / HexPercept3 -->
     <arg name="module_name" default="HexPercept3" />
+    <arg name="enable_trav_est" default="true"/>
     <arg name="sim" default="true"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
@@ -42,6 +43,16 @@
         <remap from="elevation_mapping/elevation_map_raw" to="$(arg elevation_map_raw_topic_name)"/>
         <remap from="elevation_mapping/visibility_cleanup_map" to="$(arg visibility_cleanup_map_topic_name)"/>
     </node>
+
+    <!-- Traversability Estimation -->
+    <group if="$(arg enable_trav_est)">
+        <env name="ROSCONSOLE_CONFIG_FILE" value="$(find traversability_estimation)/config/rosconsole.conf"/>
+        <node pkg="traversability_estimation" type="traversability_estimation_node" name="traversability_estimation" output="screen">
+            <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/traversibility_est/robot.yaml"/>
+            <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/traversibility_est/robot_footprint_parameter.yaml"/>
+            <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/traversibility_est/robot_filter_parameter.yaml"/>
+        </node>
+    </group>
 
     <!-- Rviz -->
     <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/$(arg module_name).rviz" required="true" if="$(arg rviz_gui)"/>
