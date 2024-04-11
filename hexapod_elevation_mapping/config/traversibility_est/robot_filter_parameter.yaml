@@ -3,7 +3,8 @@ traversability_map_filters:
   - name: surfaceNormalsFilter
     type: gridMapFilters/NormalVectorsFilter
     params:
-      input_layer: elevation_inpainted
+      # input_layer: elevation_inpainted
+      input_layer: elevation
       output_layers_prefix: surface_normal_
       radius: 0.05
       normal_vector_positive_axis: z
