@@ -124,6 +124,21 @@ The **output** is the point cloud topic that the elevation mapping node will sub
 
 ### Notations
 
+#### Traversibility Estimation
+
+If you meet the TF lookup error, please modify the code in 
+`traversability_estimation/src/TraversabilityEstimation.cpp` line 252:
+
+```cpp
+  try {
+    transformListener_.waitForTransform(traversabilityMap_.getMapFrameId(), submapPoint_.header.frame_id, ros::Time(0), ros::Duration(1.0));
+    transformListener_.transformPoint(traversabilityMap_.getMapFrameId(), submapPoint_, submapPointTransformed);
+  } catch (tf::TransformException& ex) {
+    ROS_ERROR("%s", ex.what());
+    return false;
+  }
+```
+
 #### RS-BPearl Lidar IP config
 
 When using default RS-Bpearl firmware:
