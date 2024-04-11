@@ -28,3 +28,9 @@
 [submodule "third_party/rs_driver"]
 	path = third_party/rs_driver
 	url = https://github.com/RoboSense-LiDAR/rs_driver.git
+[submodule "traversability_estimation"]
+	path = traversability_estimation
+	url = https://github.com/leggedrobotics/traversability_estimation.git
+[submodule "any_node"]
+	path = any_node
+	url = https://github.com/leggedrobotics/any_node.git
