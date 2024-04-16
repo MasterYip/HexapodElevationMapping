@@ -1,8 +1,8 @@
 submap_service: "/elevation_mapping/get_submap"
 # submap_service: "/elevation_mapping/get_raw_submap"
 # use_raw_map: true
-map_frame_id: "world"     # Must be the same as the input elevation submap.
-robot_frame_id: "base_link"
+# map_frame_id: "world"     # Must be the same as the input elevation submap.
+# robot_frame_id: "base_link"
 min_update_rate: 0.2
 map_center_x: 0.0
 map_center_y: 0.0
