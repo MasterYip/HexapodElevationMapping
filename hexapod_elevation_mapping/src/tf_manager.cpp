@@ -79,8 +79,8 @@ class TFManager
         nav_msgs::Odometry base_odom;
         base_odom.header.stamp = msg.header.stamp;
         base_odom.header.frame_id = worldFrameName_;
-        base_odom.pose.pose = pose_base;
-        base_odom.twist.twist = twist_base;
+        base_odom.pose.pose = pose_base; //Pose in WORLD frame
+        base_odom.twist.twist = twist_base; //FIXME: Twist in BASE frame
         base_odom_pub.publish(base_odom);
     }
 
