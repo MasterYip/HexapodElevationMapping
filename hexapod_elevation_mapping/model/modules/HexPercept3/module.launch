@@ -5,6 +5,7 @@
     <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
+    <arg name="base_odom_topic_name" default="/base_odom"/>
 
     <!-- ================================ Config ================================ -->
     <!-- Frame Name -->
@@ -41,6 +42,7 @@
         <param name="odom_topic_name" type="string" value="$(arg odom_topic_name)"/>
         <param name="world_frame_name" type="string" value="$(arg world_frame_name)"/>
         <param name="base_frame_name" type="string" value="$(arg base_frame_name)"/>
+        <param name="base_odom_topic_name" type="string" value="$(arg base_odom_topic_name)"/>
         <param name="odom_frame_name" type="string" value="$(arg odom_frame_name)"/>
     </node>
     <node pkg="tf2_ros" type="static_transform_publisher" name="module2lidar" args="$(arg lidar_installation_tf) $(arg module_frame_name) $(arg lidar_frame_name)"/>

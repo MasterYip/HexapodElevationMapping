@@ -3,7 +3,7 @@
     <arg name="module_name" default="HexPercept3" />
 
     <!-- Config -->
-    <arg name="enable_trav_est" default="true"/>
+    <arg name="enable_trav_est" default="false"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
