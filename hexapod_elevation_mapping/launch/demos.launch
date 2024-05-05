@@ -6,6 +6,7 @@
     <arg name="enable_trav_est" default="false"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
+    <arg name="base_odom_topic_name" default="/base_odom"/>
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept2')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3')"/>
@@ -21,6 +22,7 @@
         <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
         <arg name="world_frame_name" default="$(arg world_frame_name)"/>
         <arg name="base_frame_name" default="$(arg base_frame_name)"/>
+        <arg name="base_odom_topic_name" default="$(arg base_odom_topic_name)"/>
     </include>
 
     <!-- Elevation Mapping -->

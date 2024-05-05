@@ -5,6 +5,7 @@
     <arg name="enable_trav_est" default="false"/>
     <arg name="sim" default="true"/>
     <arg name="world_frame_name" default="world"/>
+    <arg name="base_odom_topic_name" default="/base_odom"/>
     <arg name="base_frame_name" default="base_link"/>
     <arg name="rviz_gui" default="true"/>
     <!-- Elevation Mapping Topic remap -->
@@ -27,6 +28,7 @@
         <arg name="module_installation_tf" value="$(arg module_installation_tf)"/>
         <arg name="world_frame_name" value="$(arg world_frame_name)"/>
         <arg name="base_frame_name" value="$(arg base_frame_name)"/>
+        <arg name="base_odom_topic_name" value="$(arg base_odom_topic_name)"/>
     </include>
 
     <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
