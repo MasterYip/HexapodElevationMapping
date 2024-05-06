@@ -50,12 +50,16 @@ class TFManager
             // apply transform rotation to the twist (from odom ref to world ref)
             tf2::Transform tf_transform;
             tf2::fromMsg(transformStamped.transform, tf_transform);
-            tf2::Vector3 linear_vel(msg.twist.twist.linear.x, msg.twist.twist.linear.y,
+            tf2::Vector3 linear_vel_base(msg.twist.twist.linear.x, msg.twist.twist.linear.y,
                                     msg.twist.twist.linear.z);
-            tf2::Vector3 angular_vel(msg.twist.twist.angular.x, msg.twist.twist.angular.y,
+            tf2::Vector3 angular_vel_base(msg.twist.twist.angular.x, msg.twist.twist.angular.y,
                                      msg.twist.twist.angular.z);
-            linear_vel = tf_transform.getBasis() * linear_vel;
-            angular_vel = tf_transform.getBasis() * angular_vel;
+            linear_vel_base = tf_transform.getBasis() * linear_vel_base;
+            angular_vel_base = tf_transform.getBasis() * angular_vel_base;
+            tf2::Transform tf_pose_base;
+            tf2::fromMsg(pose_base, tf_pose_base);
+            tf2::Vector3 linear_vel = tf_pose_base.getBasis() * linear_vel_base;
+            tf2::Vector3 angular_vel = tf_pose_base.getBasis() * angular_vel_base;
             twist_base.linear.x = linear_vel.getX();
             twist_base.linear.y = linear_vel.getY();
             twist_base.linear.z = linear_vel.getZ();
