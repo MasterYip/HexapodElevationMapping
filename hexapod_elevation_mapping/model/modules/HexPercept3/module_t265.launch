@@ -21,10 +21,10 @@
     <!-- FIXME: Actual param of x shift? -->
     <arg name="lidar_installation_tf" value="0.03 0 0.15 0 1.5708 0" if="$(eval sim == 1)"/>
     <arg name="lidar_installation_tf" value="0.03 0 0.15 -0.5792 0.4056 -0.5792 0.4056" unless="$(eval sim == 1)"/>
-    <arg name="odom_installation_tf" value="0.0 0 0.0 0 0 0"/>
+    <arg name="odom_installation_tf" value="0.0125 0 0.014 0 0 0"/>
     <!-- Topic Name -->
     <arg name="lidar_topic_name" value="/bpearl_points"/>
-    <arg name="odom_topic_name" value="/vrpn_client_node/HexPercept3_odom/pose"/>
+    <arg name="odom_topic_name" value="/camera/odom/sample"/>
 
     <!-- Load to rosparam -->
     <param name="$(arg module_name)/module_frame_name" value="$(arg module_frame_name)"/>
@@ -38,11 +38,11 @@
     <!-- ================================ Hardware launch ================================ -->
 
     <group if="$(eval sim == false)">
-        <!-- <include file="$(find realsense2_camera)/launch/rs_t265.launch"/> -->
+        <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
         <include file="$(find hexapod_elevation_mapping)/model/sensors/RS-BPearl/start.launch"/>
     </group>
 
-    <node name="tf_manager_world2base" pkg="hexapod_elevation_mapping" type="tf_manager2" output="screen">
+    <node name="tf_manager_world2base" pkg="hexapod_elevation_mapping" type="tf_manager" output="screen">
         <param name="odom_topic_name" type="string" value="$(arg odom_topic_name)"/>
         <param name="world_frame_name" type="string" value="$(arg world_frame_name)"/>
         <param name="base_frame_name" type="string" value="$(arg base_frame_name)"/>
@@ -50,8 +50,7 @@
         <param name="odom_frame_name" type="string" value="$(arg odom_frame_name)"/>
     </node>
     <node pkg="tf2_ros" type="static_transform_publisher" name="module2lidar" args="$(arg lidar_installation_tf) $(arg module_frame_name) $(arg lidar_frame_name)"/>
-    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="module2odom" args="$(arg odom_installation_tf) $(arg module_frame_name) $(arg odom_frame_name)"/> -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="module2odom" args="$(arg odom_installation_tf) $(arg odom_frame_name) $(arg base_frame_name)"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="module2odom" args="$(arg odom_installation_tf) $(arg module_frame_name) $(arg odom_frame_name)"/>
     <node pkg="tf2_ros" type="static_transform_publisher" name="base2module" args="$(arg module_installation_tf) $(arg base_frame_name) $(arg module_frame_name)"/>
 
 </launch>

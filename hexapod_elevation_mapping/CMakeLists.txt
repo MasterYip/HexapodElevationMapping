@@ -171,6 +171,12 @@ target_link_libraries(tf_manager
   ${catkin_LIBRARIES}
 )
 
+add_executable(tf_manager2 src/tf_manager2.cpp)
+target_link_libraries(tf_manager2
+  ${catkin_LIBRARIES}
+)
+
+
 #############
 ## Install ##
 #############
