@@ -1,3 +1,13 @@
+/**
+ * @file tf_manager2.cpp
+ * @author Master Yip (2205929492@qq.com)
+ * @brief tf_manager for optitrack
+ * @version 0.1
+ * @date 2024-07-14
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include <Eigen/Core>
 
 #include <geometry_msgs/PoseStamped.h>
