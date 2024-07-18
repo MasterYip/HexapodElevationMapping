@@ -1,6 +1,6 @@
 <launch>
     <!-- ================================ Input ================================ -->
-    <arg name="module_name" default="HexPercept3"/>
+    <arg name="module_name" default="HexPercept3_optitrack"/>
     <arg name="sim" default="true"/>
     <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
     <arg name="world_frame_name" default="world"/>
