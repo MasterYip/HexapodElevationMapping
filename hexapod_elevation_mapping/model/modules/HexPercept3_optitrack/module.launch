@@ -20,7 +20,7 @@
     <arg name="odom_installation_tf" value="0.0 0 0.0 0 0 0"/>
     <!-- Topic Name -->
     <arg name="lidar_topic_name" value="/bpearl_points"/>
-    <arg name="odom_topic_name" value="/vrpn_client_node/HexPercept3_odom/pose"/>
+    <arg name="odom_topic_name" value="/vrpn_client_node/HexPercept3_optitrack_odom/pose"/>
 
     <!-- Load to rosparam -->
     <param name="$(arg module_name)/module_frame_name" value="$(arg module_frame_name)"/>
