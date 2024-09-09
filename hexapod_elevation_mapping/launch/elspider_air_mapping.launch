@@ -50,7 +50,7 @@
         <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
         <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
         <param name="input_sources/front_lidar/topic" type="string" value="$(arg lidar_topic_name)"/>
-        <param name="input_sources/front_lidar/sensor_processor/ignore_points_above" type="double" value="$(arg ground_ceiling_boundary)" if="$(arg with_ceiling)"/>
+        <param name="input_sources/front_lidar/sensor_processor/ignore_points_above" type="double" value="$(arg ground_ceiling_boundary)"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/elspider_air_postprocessor_pipeline.yaml" />
         <!-- Topic Remap -->
