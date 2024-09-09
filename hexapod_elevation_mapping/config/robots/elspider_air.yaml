@@ -1,13 +1,13 @@
 # NOTE: The param commented out will be loaded by launch file.
 input_sources:
-  ground_truth_cloud: # A name to identify the input source
+  front_lidar: # A name to identify the input source
     type: pointcloud # Supported types: pointcloud
     # topic: /velodyne_points
     queue_size: 1
     publish_on_update: true # Whether to publish the elevation map after a callback from this source.
     sensor_processor:
       type: structured_light # Inorder to support cut-off min depth, max depth
-      ignore_points_above: 1
+      ignore_points_above: 1 # NOTE: Overloaded by launch file
       cutoff_min_depth: 0.3
 # map_frame_id: "world"
 # robot_base_frame_id: "base_link"

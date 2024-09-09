@@ -1,6 +1,6 @@
 # NOTE: The param commented out will be loaded by launch file.
 input_sources:
-  ground_truth_cloud: # A name to identify the input source
+  front_lidar: # A name to identify the input source
     type: pointcloud # Supported types: pointcloud
     # topic: /velodyne_points
     queue_size: 1

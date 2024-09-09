@@ -2,16 +2,25 @@
     <!-- Settings -->
     <!-- HexPercept1 / HexPercept2 / HexPercept3 / HexPercept3_optitrack-->
     <arg name="module_name" default="HexPercept3" />
-    <arg name="enable_trav_est" default="false"/>
     <arg name="sim" default="true"/>
     <arg name="world_frame_name" default="world"/>
     <arg name="base_odom_topic_name" default="/base_odom"/>
     <arg name="base_frame_name" default="base_link"/>
     <arg name="rviz_gui" default="true"/>
+
+    <arg name="with_ceiling" default="false"/>
+    <arg name="ground_ceiling_boundary" default="0.3"/>
+    <arg name="enable_trav_est" default="false"/>
+
     <!-- Elevation Mapping Topic remap -->
+    <!-- Ground -->
     <arg name="elevation_map_topic_name" default="elevation_mapping/elevation_map" />
     <arg name="elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw" />
     <arg name="visibility_cleanup_map_topic_name" default="elevation_mapping/visibility_cleanup_map" />
+    <!-- Ceiling -->
+    <arg name="ceiling_elevation_map_topic_name" default="elevation_mapping/elevation_map_ceiling" if="$(arg with_ceiling)"/>
+    <arg name="ceiling_elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw_ceiling" if="$(arg with_ceiling)"/>
+    <arg name="ceiling_visibility_cleanup_map_topic_name" default="elevation_mapping/visibility_cleanup_map_ceiling" if="$(arg with_ceiling)"/>
 
     <!-- Config -->
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
@@ -20,7 +29,6 @@
     <arg name="module_installation_tf" default="0.361 0 0 0 0 0" if="$(eval module_name == 'HexPercept2')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3')"/>
     <arg name="module_installation_tf" default="0.361 0 0 0 0 0" if="$(eval module_name == 'HexPercept3')"/>
-    <!-- TODO: update installation -->
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3_optitrack')"/>
     <arg name="module_installation_tf" default="0.361 0 0 0 0 0" if="$(eval module_name == 'HexPercept3_optitrack')"/>
 
@@ -34,19 +42,36 @@
         <arg name="base_odom_topic_name" value="$(arg base_odom_topic_name)"/>
     </include>
 
+    <!-- Ground -->
     <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml"/>
         <param name="map_frame_id" type="string" value="$(arg world_frame_name)"/>
         <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
         <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
-        <param name="input_sources/ground_truth_cloud/topic" type="string" value="$(arg lidar_topic_name)"/>
+        <param name="input_sources/front_lidar/topic" type="string" value="$(arg lidar_topic_name)"/>
+        <param name="input_sources/front_lidar/sensor_processor/ignore_points_above" type="double" value="$(arg ground_ceiling_boundary)" if="$(arg with_ceiling)"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml" />
-        <!-- FIXME -->
-        <!-- <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline.yaml" /> -->
-        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline_for_simple_planner.yaml" />
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/elspider_air_postprocessor_pipeline.yaml" />
+        <!-- Topic Remap -->
         <remap from="elevation_mapping/elevation_map" to="$(arg elevation_map_topic_name)"/>
         <remap from="elevation_mapping/elevation_map_raw" to="$(arg elevation_map_raw_topic_name)"/>
         <remap from="elevation_mapping/visibility_cleanup_map" to="$(arg visibility_cleanup_map_topic_name)"/>
+    </node>
+
+    <!-- Ceiling  -->
+    <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping_ceiling" output="screen" if="$(arg with_ceiling)">
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/robots/elspider_air.yaml"/>
+        <param name="map_frame_id" type="string" value="$(arg world_frame_name)"/>
+        <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
+        <param name="input_sources/front_lidar/topic" type="string" value="$(arg lidar_topic_name)"/>
+        <param name="input_sources/front_lidar/sensor_processor/ignore_points_below" type="double" value="$(arg ground_ceiling_boundary)"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/elspider_air_postprocessor_pipeline.yaml"/>
+        <!-- Topic Remap -->
+        <remap from="elevation_mapping/elevation_map" to="$(arg ceiling_elevation_map_topic_name)"/>
+        <remap from="elevation_mapping/elevation_map_raw" to="$(arg ceiling_elevation_map_raw_topic_name)"/>
+        <remap from="elevation_mapping/visibility_cleanup_map" to="$(arg ceiling_visibility_cleanup_map_topic_name)"/>
     </node>
 
     <!-- Traversability Estimation -->
