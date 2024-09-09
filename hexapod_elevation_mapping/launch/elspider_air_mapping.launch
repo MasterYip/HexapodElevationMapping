@@ -8,8 +8,9 @@
     <arg name="base_frame_name" default="base_link"/>
     <arg name="rviz_gui" default="true"/>
 
-    <arg name="with_ceiling" default="false"/>
+    <arg name="with_ceiling" default="true"/>
     <arg name="ground_ceiling_boundary" default="0.3"/>
+
     <arg name="enable_trav_est" default="false"/>
 
     <!-- Elevation Mapping Topic remap -->
@@ -18,9 +19,9 @@
     <arg name="elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw" />
     <arg name="visibility_cleanup_map_topic_name" default="elevation_mapping/visibility_cleanup_map" />
     <!-- Ceiling -->
-    <arg name="ceiling_elevation_map_topic_name" default="elevation_mapping/elevation_map_ceiling" if="$(arg with_ceiling)"/>
-    <arg name="ceiling_elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw_ceiling" if="$(arg with_ceiling)"/>
-    <arg name="ceiling_visibility_cleanup_map_topic_name" default="elevation_mapping/visibility_cleanup_map_ceiling" if="$(arg with_ceiling)"/>
+    <arg name="ceiling_elevation_map_topic_name" default="elevation_mapping_ceiling/elevation_map"/>
+    <arg name="ceiling_elevation_map_raw_topic_name" default="elevation_mapping_ceiling/elevation_map_raw"/>
+    <arg name="ceiling_visibility_cleanup_map_topic_name" default="elevation_mapping_ceiling/visibility_cleanup_map"/>
 
     <!-- Config -->
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
@@ -69,9 +70,9 @@
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/simple_demo_map.yaml"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/elspider_air_postprocessor_pipeline.yaml"/>
         <!-- Topic Remap -->
-        <remap from="elevation_mapping/elevation_map" to="$(arg ceiling_elevation_map_topic_name)"/>
-        <remap from="elevation_mapping/elevation_map_raw" to="$(arg ceiling_elevation_map_raw_topic_name)"/>
-        <remap from="elevation_mapping/visibility_cleanup_map" to="$(arg ceiling_visibility_cleanup_map_topic_name)"/>
+        <remap from="elevation_mapping_ceiling/elevation_map" to="$(arg ceiling_elevation_map_topic_name)"/>
+        <remap from="elevation_mapping_ceiling/elevation_map_raw" to="$(arg ceiling_elevation_map_raw_topic_name)"/>
+        <remap from="elevation_mapping_ceiling/visibility_cleanup_map" to="$(arg ceiling_visibility_cleanup_map_topic_name)"/>
     </node>
 
     <!-- Traversability Estimation -->
