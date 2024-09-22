@@ -32,6 +32,8 @@
     <arg name="module_installation_tf" default="0.361 0 0 0 0 0" if="$(eval module_name == 'HexPercept3')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3_optitrack')"/>
     <arg name="module_installation_tf" default="0.361 0 0 0 0 0" if="$(eval module_name == 'HexPercept3_optitrack')"/>
+    <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3_vins')"/>
+    <arg name="module_installation_tf" default="0.361 0 0 0 0 0" if="$(eval module_name == 'HexPercept3_vins')"/>
 
     <!-- Launch -->
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
