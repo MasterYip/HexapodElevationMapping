@@ -36,7 +36,7 @@ class TFManager
     std::string worldFrameName_;
     std::string baseFrameName_;
     std::string odomFrameName_;
-    double odomTransFactor_ = 1.21;
+    double odomTransFactor_ = 1.05; // taxing; 1.21
 
   public:
     void odomCallback(const nav_msgs::Odometry &msg)
