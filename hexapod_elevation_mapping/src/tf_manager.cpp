@@ -1,3 +1,13 @@
+/**
+ * @file tf_manager.cpp
+ * @author Master Yip (2205929492@qq.com)
+ * @brief tf_manager for T265
+ * @version 0.1
+ * @date 2024-09-23
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include <Eigen/Core>
 
 #include <geometry_msgs/PoseStamped.h>
@@ -26,6 +36,7 @@ class TFManager
     std::string worldFrameName_;
     std::string baseFrameName_;
     std::string odomFrameName_;
+    double odomTransFactor_ = 1.21;
 
   public:
     void odomCallback(const nav_msgs::Odometry &msg)
@@ -39,21 +50,26 @@ class TFManager
         last_timestamp = msg.header.stamp;
         geometry_msgs::TransformStamped world2base_tf_;
         geometry_msgs::Pose pose_base;
+        geometry_msgs::Pose odom_pose = msg.pose.pose;
+        odom_pose.position.x *= odomTransFactor_;
+        odom_pose.position.y *= odomTransFactor_;
+        odom_pose.position.z *= odomTransFactor_;
         geometry_msgs::Twist twist_base;
         try
-        {
+        { // transform from odom to base
             geometry_msgs::TransformStamped transformStamped;
             transformStamped =
                 tfBuffer_.lookupTransform(odomFrameName_, baseFrameName_, ros::Time::now());
             // apply transform to the pose
-            tf2::doTransform(msg.pose.pose, pose_base, transformStamped);
+            tf2::doTransform(odom_pose, pose_base, transformStamped);
             // apply transform rotation to the twist (from odom ref to world ref)
             tf2::Transform tf_transform;
             tf2::fromMsg(transformStamped.transform, tf_transform);
-            tf2::Vector3 linear_vel_base(msg.twist.twist.linear.x, msg.twist.twist.linear.y,
-                                    msg.twist.twist.linear.z);
+            tf2::Vector3 linear_vel_base(msg.twist.twist.linear.x * odomTransFactor_,
+                                         msg.twist.twist.linear.y * odomTransFactor_,
+                                         msg.twist.twist.linear.z * odomTransFactor_);
             tf2::Vector3 angular_vel_base(msg.twist.twist.angular.x, msg.twist.twist.angular.y,
-                                     msg.twist.twist.angular.z);
+                                          msg.twist.twist.angular.z);
             linear_vel_base = tf_transform.getBasis() * linear_vel_base;
             angular_vel_base = tf_transform.getBasis() * angular_vel_base;
             tf2::Transform tf_pose_base;
@@ -83,7 +99,7 @@ class TFManager
         nav_msgs::Odometry base_odom;
         base_odom.header.stamp = msg.header.stamp;
         base_odom.header.frame_id = worldFrameName_;
-        base_odom.pose.pose = pose_base; //Pose in WORLD frame
+        base_odom.pose.pose = pose_base;    //Pose in WORLD frame
         base_odom.twist.twist = twist_base; //FIXME: Twist in BASE frame
         base_odom_pub.publish(base_odom);
     }
@@ -98,6 +114,8 @@ class TFManager
         ros::param::get("~world_frame_name", worldFrameName_);
         ros::param::get("~base_frame_name", baseFrameName_);
         ros::param::get("~odom_frame_name", odomFrameName_);
+
+        ros::param::get("~odom_trans_factor", odomTransFactor_);
 
         odom_sub = nh_.subscribe(odomTopicName_, 10, &TFManager::odomCallback, this);
         base_odom_pub = nh_.advertise<nav_msgs::Odometry>(baseOdomTopicName_, 1);
