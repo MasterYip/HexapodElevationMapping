@@ -1,0 +1,58 @@
+<launch>
+    <!-- ================================ Input ================================ -->
+    <arg name="module_name" default="HexPercept3_fastlio2"/>
+    <arg name="sim" default="true"/>
+    <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
+    <arg name="world_frame_name" default="world"/>
+    <arg name="base_frame_name" default="base_link"/>
+    <arg name="base_odom_topic_name" default="/base_odom"/>
+
+    <!-- ================================ Config ================================ -->
+    <!-- Frame Name -->
+    <arg name="module_frame_name" value="$(arg module_name)"/>
+    <arg name="lidar_frame_name" value="BPearl_Lidar"/>
+    <arg name="odom_frame_name" value="$(arg module_name)_odom"/>
+    <!-- Installation TF -->
+    <!-- Usage: static_transform_publisher x y z yaw pitch roll -->
+    <!-- Usage: static_transform_publisher x y z qx qy qz qw -->
+    <arg name="lidar_installation_tf" value="0.03 0 0.15 0 1.5708 0" if="$(eval sim == 1)"/>
+    <arg name="lidar_installation_tf" value="-0.045 0 0.15 -0.5792 0.4056 -0.5792 0.4056" unless="$(eval sim == 1)"/>
+    <arg name="odom_installation_tf" value="0.0125 0 0.014 0 0 0"/>
+    <!-- Topic Name -->
+    <arg name="lidar_topic_name" value="/bpearl_points"/>
+    <arg name="odom_topic_name" value="/elspider_air_vins_t265/odometry"/>
+
+    <!-- Load to rosparam -->
+    <param name="$(arg module_name)/module_frame_name" value="$(arg module_frame_name)"/>
+    <param name="$(arg module_name)/lidar_frame_name" value="$(arg lidar_frame_name)"/>
+    <param name="$(arg module_name)/odom_frame_name" value="$(arg odom_frame_name)"/>
+    <param name="$(arg module_name)/lidar_installation_tf" value="$(arg lidar_installation_tf)"/>
+    <param name="$(arg module_name)/odom_installation_tf" value="$(arg odom_installation_tf)"/>
+    <param name="$(arg module_name)/lidar_topic_name" value="$(arg lidar_topic_name)"/>
+    <param name="$(arg module_name)/odom_topic_name" value="$(arg odom_topic_name)"/>
+
+    <!-- ================================ Hardware launch ================================ -->
+
+    <group if="$(eval sim == false)">
+        <include file="$(find realsense2_camera)/launch/rs_t265.launch">
+            <!-- IMU together with Acc/Vel -->
+            <arg name="unite_imu_method" value="copy"/>
+        </include>
+        <include file="$(find hexapod_elevation_mapping)/model/sensors/RS-BPearl/start.launch"/>
+    </group>
+
+
+
+    <node name="tf_manager_world2base" pkg="hexapod_elevation_mapping" type="tf_manager" output="screen">
+        <param name="odom_topic_name" type="string" value="$(arg odom_topic_name)"/>
+        <param name="world_frame_name" type="string" value="$(arg world_frame_name)"/>
+        <param name="base_frame_name" type="string" value="$(arg base_frame_name)"/>
+        <param name="base_odom_topic_name" type="string" value="$(arg base_odom_topic_name)"/>
+        <param name="odom_frame_name" type="string" value="$(arg odom_frame_name)"/>
+    </node>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="module2lidar" args="$(arg lidar_installation_tf) $(arg module_frame_name) $(arg lidar_frame_name)"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="module2odom" args="$(arg odom_installation_tf) $(arg module_frame_name) $(arg odom_frame_name)"/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="base2module" args="$(arg module_installation_tf) $(arg base_frame_name) $(arg module_frame_name)"/>
+
+
+</launch>

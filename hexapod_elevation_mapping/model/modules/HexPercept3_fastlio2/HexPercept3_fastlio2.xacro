@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="HexPercept3_fastlio2" params="parent_link *origin lidar_frame_name:=BPearl_Lidar camera_frame_name:=camera">
+        <!-- Const -->
+        <xacro:arg name="gpu" default="false"/>
+        <xacro:property name="gpu" value="$(arg gpu)" />
+        <xacro:arg name="organize_cloud" default="false"/>
+        <xacro:property name="organize_cloud" value="$(arg organize_cloud)" />
+
+        <!-- Interface Joint -->
+        <joint name="sensorSupport_joint" type="fixed">
+            <parent link="${parent_link}"/>
+            <child link="sensorSupport"/>
+            <xacro:insert_block name="origin"/>
+        </joint>
+
+        <!-- root link can not have interia, so add this link and joint -->
+        <link name="sensorSupport">
+            <inertial>
+                <origin xyz="0 0 0.0" rpy="0 0 0"/>
+                <!-- FIXME: need to update mass -->
+                <mass value="1.0"/>
+                <!-- FIXME: need to update ixx,iyy and izz -->
+                <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept3_fastlio2/Support.STL"/>
+                </geometry>
+                <material name="">
+                    <color rgba="0.5 0.5 0.5 1" />
+                </material>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept3_fastlio2/Support.STL"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <xacro:include filename="$(find hexapod_elevation_mapping)/model/sensors/RS-BPearl/xacro/RS-BPearl.xacro"/>
+        <xacro:RS-BPearl parent="sensorSupport" name="${lidar_frame_name}" topic="/bpearl_points" organize_cloud="${organize_cloud}" hz="15" samples="1000" gpu="${gpu}">
+            <origin xyz="-0.045 0 0.15" rpy="0 1.5708 0" />
+        </xacro:RS-BPearl>
+
+        <xacro:include filename="$(find realsense_ros_gazebo)/xacro/tracker.xacro"/>
+        <xacro:realsense_T265 sensor_name="${camera_frame_name}" parent_link="sensorSupport" rate="30.0">
+            <origin rpy="0 0 0" xyz="0.0125 0 0.014"/>
+        </xacro:realsense_T265>
+    </xacro:macro>
+</robot>
