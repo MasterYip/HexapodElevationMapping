@@ -1,3 +1,5 @@
+![合成 1 (0-00-01-13)](https://github.com/user-attachments/assets/395561d5-37a5-44a9-8133-1063feb5d54a)
+
 # HexapodElevationMapping
 
 [English](README.md) | [中文](README_CN.md)
