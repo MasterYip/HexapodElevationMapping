@@ -43,7 +43,7 @@ git clone --recursive https://github.com/MasterYip/HexapodElevationMapping
 安装依赖项。
 
 ```bash
-sudo apt install ros-$ROS_DISTRO-realsense2-camera ros-noetic-realsense2-description
+sudo apt install ros-$ROS_DISTRO-realsense2-camera ros-noetic-realsense2-description ros-noetic-costmap-2d libpcap-dev
 ```
 
 Catkin 编译。
@@ -64,7 +64,7 @@ source devel/setup.bash
 ```
 
 ```bash
-roslauch hexapod_elevation_mapping demos.launch
+roslaunch hexapod_elevation_mapping demos.launch
 ```
 
 ---
