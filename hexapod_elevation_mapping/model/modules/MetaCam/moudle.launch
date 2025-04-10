@@ -59,7 +59,7 @@
     <node pkg="tf2_ros" type="static_transform_publisher" name="base2module" args="$(arg module_installation_tf) $(arg base_frame_name) $(arg module_frame_name)"/>
 
     <!-- VINS Fusion with T265 -->
-    <!-- <node name="elspider_air_vins_t265" pkg="vins" type="vins_node" output="log" args="$(find hexapod_elevation_mapping)/config/vins/realsense_t265/stereo_imu.yaml"/> -->
+    <node name="elspider_air_vins_t265" pkg="vins" type="vins_node" output="log" args="$(find hexapod_elevation_mapping)/config/vins/realsense_t265/stereo_imu.yaml"/>
 
 
 </launch>
