@@ -38,7 +38,7 @@
             <arg name="enable_fisheye1" value="true"/>
             <arg name="enable_fisheye2" value="true"/>
             <!-- IMU together with Acc/Vel -->
-            <arg name="unite_imu_method" value="copy"/> 
+            <arg name="unite_imu_method" value="copy"/>
             <!-- Sync IMU & Image -->
             <arg name="enable_sync" value="true"/>
         </include>
@@ -59,7 +59,7 @@
     <node pkg="tf2_ros" type="static_transform_publisher" name="base2module" args="$(arg module_installation_tf) $(arg base_frame_name) $(arg module_frame_name)"/>
 
     <!-- VINS Fusion with T265 -->
-    <node name="elspider_air_vins_t265" pkg="vins" type="vins_node" output="log" args="$(find hexapod_elevation_mapping)/config/vins/realsense_t265/stereo_imu.yaml"/>
+    <!-- <node name="elspider_air_vins_t265" pkg="vins" type="vins_node" output="log" args="$(find hexapod_elevation_mapping)/config/vins/realsense_t265/stereo_imu.yaml"/> -->
 
 
 </launch>

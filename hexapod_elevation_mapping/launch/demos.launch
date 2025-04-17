@@ -1,6 +1,6 @@
 <launch>
     <!-- HexPercept1 / HexPercept2 / HexPercept3 -->
-    <arg name="module_name" default="HexPercept3" />
+    <arg name="module_name" default="MetaCam" />
 
     <!-- Config -->
     <arg name="enable_trav_est" default="false"/>
@@ -10,6 +10,7 @@
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept2')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3')"/>
+    <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'MetaCam')"/>
     <!-- Elevation Mapping Topic remap -->
     <arg name="elevation_map_topic_name" default="elevation_mapping/elevation_map" />
     <arg name="elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw" />

@@ -28,7 +28,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept3_vins/Support.STL"/>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/MetaCam/Support.STL"/>
                 </geometry>
                 <material name="">
                     <color rgba="0.5 0.5 0.5 1" />
@@ -38,7 +38,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
-                    <mesh filename="package://hexapod_elevation_mapping/model/modules/HexPercept3_vins/Support.STL"/>
+                    <mesh filename="package://hexapod_elevation_mapping/model/modules/MetaCam/Support.STL"/>
                 </geometry>
             </collision>
         </link>
