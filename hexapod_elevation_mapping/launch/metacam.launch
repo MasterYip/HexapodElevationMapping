@@ -1,10 +1,16 @@
 <launch>
     <!-- HexPercept1 / HexPercept2 / HexPercept3 -->
     <arg name="module_name" default="MetaCam" />
+    <!-- start all-->
+    <!-- <node name="start_all" pkg="hexapod_elevation_mapping" type="bash" args="$(find hexapod_elevation_mapping)/bash/start.sh" output="screen"/> -->
+    <!-- Controller -->
+    <arg name="scripts_path" default="$(find hexapod_elevation_mapping)/scripts" />
+    <node pkg="hexapod_elevation_mapping" type="start.sh" args="$(arg scripts_path)" name="tower_launch" output="screen">
+    </node>
 
     <!-- Config -->
     <arg name="enable_trav_est" default="false"/>
-    <arg name="world_frame_name" default="camera_init"/>
+    <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="base_link"/>
     <arg name="base_odom_topic_name" default="/base_odom"/>
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
@@ -20,7 +26,7 @@
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
         <arg name="module_name" value="$(arg module_name)"/>
         <arg name="sim" default="false"/>
-        <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
+        <arg name="module_installation_tf" default="1 0 0 0 0 0"/>
         <arg name="world_frame_name" default="$(arg world_frame_name)"/>
         <arg name="base_frame_name" default="$(arg base_frame_name)"/>
         <arg name="base_odom_topic_name" default="$(arg base_odom_topic_name)"/>
@@ -52,8 +58,6 @@
             <param name="footprint/footprint_frame_id" type="string" value="$(arg base_frame_name)"/>
         </node>
     </group>
-
-
-    <!-- Rviz -->
+    <!-- rviz -->
     <node name="hex_elemap_rviz" pkg="rviz" type="rviz" args="-d $(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/$(arg module_name).rviz" required="true"/>
 </launch>

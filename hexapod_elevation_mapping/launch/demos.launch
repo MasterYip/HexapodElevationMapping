@@ -1,6 +1,6 @@
 <launch>
     <!-- HexPercept1 / HexPercept2 / HexPercept3 -->
-    <arg name="module_name" default="MetaCam" />
+    <arg name="module_name" default="HexPercept3" />
 
     <!-- Config -->
     <arg name="enable_trav_est" default="false"/>
@@ -10,7 +10,7 @@
     <arg name="lidar_topic_name" value="/velodyne_points" if="$(eval module_name == 'HexPercept1')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept2')"/>
     <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'HexPercept3')"/>
-    <arg name="lidar_topic_name" value="/bpearl_points" if="$(eval module_name == 'MetaCam')"/>
+    <arg name="lidar_topic_name" value="/tower/lidar/points" if="$(eval module_name == 'MetaCam')"/>
     <!-- Elevation Mapping Topic remap -->
     <arg name="elevation_map_topic_name" default="elevation_mapping/elevation_map" />
     <arg name="elevation_map_raw_topic_name" default="elevation_mapping/elevation_map_raw" />
@@ -20,7 +20,7 @@
     <include file="$(find hexapod_elevation_mapping)/model/modules/$(arg module_name)/module.launch">
         <arg name="module_name" value="$(arg module_name)"/>
         <arg name="sim" default="true"/>
-        <arg name="module_installation_tf" default="0 0 0 0 0 0"/>
+        <arg name="module_installation_tf" default="1 0 0 0 0 0"/>
         <arg name="world_frame_name" default="$(arg world_frame_name)"/>
         <arg name="base_frame_name" default="$(arg base_frame_name)"/>
         <arg name="base_odom_topic_name" default="$(arg base_odom_topic_name)"/>
