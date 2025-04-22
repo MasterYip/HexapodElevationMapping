@@ -2,6 +2,7 @@
 
 # 获取scripts文件夹的绝对路径
 SCRIPTS_PATH=$1
+PASSWORD=0
 
 # 启动 brige.sh
 bash "$SCRIPTS_PATH/brige.sh" &
