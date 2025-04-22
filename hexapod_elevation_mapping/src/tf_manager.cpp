@@ -36,7 +36,7 @@ class TFManager
     std::string worldFrameName_;
     std::string baseFrameName_;
     std::string odomFrameName_;
-    double odomTransFactor_ = 1.05; // taxing; 1.21
+    double odomTransFactor_ = 1.0; // taxing; 1.21
 
   public:
     void odomCallback(const nav_msgs::Odometry &msg)
@@ -56,26 +56,45 @@ class TFManager
         odom_pose.position.z *= odomTransFactor_;
         geometry_msgs::Twist twist_base;
         try
-        { // transform from odom to base
+        { 
+            // Get the fixed transform from sensor (odom frame) to base
             geometry_msgs::TransformStamped transformStamped;
-            transformStamped =
-                tfBuffer_.lookupTransform(odomFrameName_, baseFrameName_, ros::Time::now());
-            // apply transform to the pose
-            tf2::doTransform(odom_pose, pose_base, transformStamped);
-            // apply transform rotation to the twist (from odom ref to world ref)
-            tf2::Transform tf_transform;
-            tf2::fromMsg(transformStamped.transform, tf_transform);
+            transformStamped = tfBuffer_.lookupTransform(odomFrameName_, baseFrameName_, ros::Time(0));
+            
+            // Convert the odometry pose and the transform to tf2 objects for easier manipulation
+            tf2::Transform tf_odom_pose;
+            tf2::fromMsg(odom_pose, tf_odom_pose);
+            
+            tf2::Transform tf_sensor_to_base;
+            tf2::fromMsg(transformStamped.transform, tf_sensor_to_base);
+            
+            // Calculate the new base pose by applying the sensor-to-base transform
+            // When sensor rotates, this will properly change the base position
+            tf2::Transform tf_base_pose = tf_odom_pose * tf_sensor_to_base;
+            
+            // Convert back to geometry_msgs format
+            tf2::toMsg(tf_base_pose, pose_base);
+            
+            // Now handle the twist properly
             tf2::Vector3 linear_vel_base(msg.twist.twist.linear.x * odomTransFactor_,
-                                         msg.twist.twist.linear.y * odomTransFactor_,
-                                         msg.twist.twist.linear.z * odomTransFactor_);
-            tf2::Vector3 angular_vel_base(msg.twist.twist.angular.x, msg.twist.twist.angular.y,
-                                          msg.twist.twist.angular.z);
-            linear_vel_base = tf_transform.getBasis() * linear_vel_base;
-            angular_vel_base = tf_transform.getBasis() * angular_vel_base;
-            tf2::Transform tf_pose_base;
-            tf2::fromMsg(pose_base, tf_pose_base);
-            tf2::Vector3 linear_vel = tf_pose_base.getBasis() * linear_vel_base;
-            tf2::Vector3 angular_vel = tf_pose_base.getBasis() * angular_vel_base;
+                                       msg.twist.twist.linear.y * odomTransFactor_,
+                                       msg.twist.twist.linear.z * odomTransFactor_);
+            tf2::Vector3 angular_vel_base(msg.twist.twist.angular.x, 
+                                        msg.twist.twist.angular.y,
+                                        msg.twist.twist.angular.z);
+                                        
+            // Apply the rotation part of the transform to the linear and angular velocities
+            linear_vel_base = tf_sensor_to_base.getBasis() * linear_vel_base;
+            angular_vel_base = tf_sensor_to_base.getBasis() * angular_vel_base;
+            
+            // Apply the world frame rotation
+            tf2::Quaternion world_rotation;
+            tf2::fromMsg(pose_base.orientation, world_rotation);
+            tf2::Matrix3x3 world_rotation_mat(world_rotation);
+            
+            tf2::Vector3 linear_vel = world_rotation_mat * linear_vel_base;
+            tf2::Vector3 angular_vel = world_rotation_mat * angular_vel_base;
+            
             twist_base.linear.x = linear_vel.getX();
             twist_base.linear.y = linear_vel.getY();
             twist_base.linear.z = linear_vel.getZ();
@@ -86,7 +105,10 @@ class TFManager
         catch (tf2::TransformException &ex)
         {
             ROS_WARN("%s", ex.what());
+            return; // Skip this update if transform fails
         }
+        
+        // Publish the transform from world to base
         world2base_tf_.header.stamp = msg.header.stamp;
         world2base_tf_.header.frame_id = worldFrameName_;
         world2base_tf_.child_frame_id = baseFrameName_;
@@ -96,11 +118,12 @@ class TFManager
         world2base_tf_.transform.rotation = pose_base.orientation;
         br.sendTransform(world2base_tf_);
 
+        // Publish the odometry message
         nav_msgs::Odometry base_odom;
         base_odom.header.stamp = msg.header.stamp;
         base_odom.header.frame_id = worldFrameName_;
-        base_odom.pose.pose = pose_base;    //Pose in WORLD frame
-        base_odom.twist.twist = twist_base; //FIXME: Twist in BASE frame
+        base_odom.pose.pose = pose_base;    // Pose in WORLD frame
+        base_odom.twist.twist = twist_base; // Twist in BASE frame
         base_odom_pub.publish(base_odom);
     }
 
