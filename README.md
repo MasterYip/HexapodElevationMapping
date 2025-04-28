@@ -6,9 +6,6 @@
 
 **Sensor Module & Elevation mapping bundle** for Robot both in simulation and real world.
 
-TODO:
-- Add namespace option for sensor module
-
 ---
 
 ## Sensor Modules
@@ -184,6 +181,10 @@ Git submodules
 - [velodyne](https://github.com/ros-drivers/velodyne)
 - [realsense_ros_gazebo](https://github.com/nilseuropa/realsense_ros_gazebo)
 - [velodyne_simulator](https://bitbucket.org/DataspeedInc/velodyne_simulator.git)
+
+## TODO
+
+- Add namespace option for sensor module
 
 ## Cite this repo
 
