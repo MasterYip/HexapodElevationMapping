@@ -206,3 +206,14 @@ Origin repository:
 - [Tipriest/kindr_ros](https://github.com/Tipriest/kindr_ros)
 - [Tipriest/realsense_ros_gazebo](https://github.com/Tipriest/realsense_ros_gazebo)
 - [Tipriest/realsense-ros](https://github.com/Tipriest/realsense-ros)
+# MetCam
+
+# Environment
+
+create ros1(noetic) ros2(galactic)
+sudo apt-get install ros-galactic-ros1-bridge 
+before run start.sh you should sudo chmod 777 start.sh
+before run start_docker.sh you should create docker group and reboot to avoid using sudo
+IPV4 : Adress 192.168.1.55
+Netmask 255.255.255.0
+Gateway 192.168.1.1
