@@ -7,3 +7,18 @@ min_variance: 0.000009
 max_variance: 0.01
 mahalanobis_distance_threshold: 2.5
 multi_height_noise: 0.0000009
+
+# Dynamic obstacle cleanup parameters
+enable_visibility_cleanup: true
+visibility_cleanup_rate: 10.0  # Hz - how often to perform cleanup
+scanning_duration: 1.0  # seconds - time window to consider for cleanup
+# Reduce these values for faster cleanup of dynamic obstacles
+min_horizontal_variance: 0.0001  # Lower variance for faster updates
+max_horizontal_variance: 0.005   # Reduced from default for quicker cleanup
+horizontal_variance_update_rate: 10.0  # Hz - how often variance updates
+
+# Time-based cleanup parameters
+enable_continuous_cleanup: true
+cleanup_rate: 5.0  # Hz - continuous cleanup frequency
+max_no_update_duration: 2.0  # seconds - cells not updated will have increased variance
+variance_increase_rate: 0.001  # rate of variance increase for non-updated cells

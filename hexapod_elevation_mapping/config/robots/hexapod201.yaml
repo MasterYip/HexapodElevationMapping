@@ -11,6 +11,11 @@ input_sources:
       ignore_points_below: -2
       cutoff_min_depth: -5.0
       cutoff_max_depth: 5.0
+      # Dynamic obstacle parameters
+      enable_ray_tracing: true
+      clear_cells_on_ray_tracing: true
+      ray_tracing_range: 5.0
+      variance_per_ray: 0.0001
   back: # A name to identify the input source
     type: pointcloud # Supported types: pointcloud
     topic: /rslidar_points_trans_back
@@ -22,11 +27,18 @@ input_sources:
       ignore_points_below: -2
       cutoff_min_depth: -5.0
       cutoff_max_depth: 5.0
+      # Dynamic obstacle parameters
+      enable_ray_tracing: true
+      clear_cells_on_ray_tracing: true
+      ray_tracing_range: 5.0
+      variance_per_ray: 0.0001
 # map_frame_id: "world"
 # robot_base_frame_id: "base_link"
 robot_pose_with_covariance_topic: "" # Leaving this empty skipps pose covariance updates.
-robot_pose_cache_size: 200
+robot_pose_cache_size: 50  # Reduced for faster processing
 # track_point_frame_id: "base_link"
 track_point_x: 0.0
 track_point_y: 0.0
 track_point_z: 0.0
+update_rate: 20.0  # Hz - increased update frequency
+fuse_rate: 10.0    # Hz - how often to fuse measurements
