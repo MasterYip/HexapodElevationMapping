@@ -6,6 +6,7 @@
     <arg name="world_frame_name" default="world"/>
     <arg name="base_frame_name" default="IMU_LINK"/>
     <arg name="base_odom_topic_name" default="/Odometry"/>
+    <arg name="cross_barrier" default="false"/>
 
     <!-- Elevation Mapping Topic remap -->
     <arg name="elevation_map_topic_name" default="elevation_mapping/elevation_map" />
@@ -19,7 +20,8 @@
         <param name="map_frame_id" type="string" value="$(arg world_frame_name)"/>
         <param name="robot_base_frame_id" type="string" value="$(arg base_frame_name)"/>
         <param name="track_point_frame_id" type="string" value="$(arg base_frame_name)"/>
-        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/prj201_map_cfg.yaml" />
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/prj201_map_obsacross_cfg.yaml" if="$(arg cross_barrier)"/>
+        <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/elevation_maps/prj201_map_cfg.yaml" unless="$(arg cross_barrier)"/>
         <rosparam command="load" file="$(find hexapod_elevation_mapping)/config/postprocessing/postprocessor_pipeline_prj201.yaml" />
         <remap from="elevation_mapping/elevation_map" to="$(arg elevation_map_topic_name)"/>
         <remap from="elevation_mapping/elevation_map_raw" to="$(arg elevation_map_raw_topic_name)"/>
